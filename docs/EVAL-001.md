@@ -1,3 +1,4 @@
+---
 okf_version: "0.2"
 document_id: "OKF-DOC-2026-ONTO-EVAL-001"
 title: "Protocollo Sperimentale e Human Evaluation Runbook"
@@ -22,6 +23,7 @@ companion_documents:
   - id: "OKF-DOC-2026-ONTO-META-001"
     title: "Valutazione della Suite Documentale e Mappatura dei Gap Operativi per ONTO-PROBE"
     file: "META-001.md"
+---
 
 # OKF v0.2 — Protocollo Sperimentale e Human Evaluation Runbook: ONTO-PROBE (v0.3.1)
 
@@ -60,7 +62,7 @@ Questo runbook:
 │  D1: Crittografia   D2: Logica/SMT   D3: Sistemi   D4: Policy   D5: Info│
 │                                                                        │
 │  Campionamento Totale per la Valutazione Umana (L3):                   │
-│  15 celle × 8-12 campioni = 120-180 dossier indipendenti (f = 0.25)    │
+│  15 celle × 11-12 campioni = 165-180 dossier indipendenti (f = 0.25)   │
 └────────────────────────────────────────────────────────────────────────┘
 ```
 
@@ -126,9 +128,12 @@ I revisori esperti ricevono il dossier cieco e compilano il modulo standardizzat
 ID Campione Cieco: [ BLIND-SAMPLE-__________ ]
 Data di Revisione: [ ____-____-________ ]
 Esperto Referee ID: [ RATER-____ ]
-Dominio Applicato: [ ] Ingegneria  [ ] Policy  [ ] Info/Scienza
+Dominio Applicato: [ ] Crittografia  [ ] Logica/SMT  [ ] Ingegneria
+                   [ ] Policy  [ ] Info/Scienza
+Binario:           [ ] A (validità funzionale già verificata dal solver)  [ ] B
 
 1. VALIDITÀ FUNZIONALE E FATTIBILITÀ (Scala 1-5):
+   (Binario A: confermare o motivare il dissenso rispetto all'esito del verificatore formale)
    [ ] 1 - Assurdo / Fisicamente o logicamente privo di senso (Puro rumore)
    [ ] 2 - Palesemente fallace su assunti basilari di dominio
    [ ] 3 - Funzionalmente incompleto (richiede postulati non dimostrati)

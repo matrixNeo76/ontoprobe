@@ -1,3 +1,4 @@
+---
 okf_version: "0.2"
 document_id: "OKF-DOC-2026-ONTO-BENCH-001"
 title: "Catalogo dei Task e Specifiche del Benchmark O-Novel v0.1"
@@ -22,6 +23,7 @@ companion_documents:
   - id: "OKF-DOC-2026-ONTO-META-001"
     title: "Valutazione della Suite Documentale e Mappatura dei Gap Operativi per ONTO-PROBE"
     file: "META-001.md"
+---
 
 # OKF v0.2 — Benchmark O-Novel: Catalogo dei Task e Specifiche Esecutive (v0.3.1)
 
@@ -58,8 +60,8 @@ $$\text{Sim}_{\max}(S) = \max_{i} \left( \frac{\mathbf{e}(S) \cdot \mathbf{a}_i}
 
 $$\text{Structural\_Displacement}(S) = 1.0 - \text{Sim}_{\max}(S)$$
 
-* **Calibrazione della Soglia $\text{Sim}_{\max} \ge 0.60$:** Questa soglia numerica è calibrata empiricamente su un dataset di validazione di 100 coppie di controllo (50 variazioni terminologiche di brevetti noti e 50 formulazioni con divergenza assiomatica reale). Il valore $0.60$ massimizza la metrica $F_1$ ($F_1 = 0.92$), discriminando tra parafrasi superficiali e divergenze causali autentiche.
-* **Gate Funzionale:** Se $V(S) \ge \theta_{\text{valid}} \implies \text{Score} = \text{Structural\_Displacement} \times V(S)$; se $V(S) < \theta_{\text{valid}} \implies \text{Score} = 0.0$.
+* **Soglia $\tau$ di novità (provvisoria):** un candidato supera il filtro di distanza se $\text{Sim}_{\max}(S) < \tau$, ovvero $\text{Structural\_Displacement}(S) > 1 - \tau$, coerentemente con la definizione di O-Novelty in THEORY-001 §2.3. Il valore di partenza è $\tau = 0.60$ ed è **da calibrare** prima della campagna completa su un dataset di validazione di 100 coppie di controllo (50 variazioni terminologiche di brevetti noti e 50 formulazioni con divergenza assiomatica reale), scegliendo il $\tau$ che massimizza la metrica $F_1$ nel discriminare parafrasi superficiali da divergenze causali autentiche. Il dataset e il risultato della calibrazione non sono ancora disponibili in questo repository.
+* **Gate Funzionale:** Se $V(S) \ge \theta_{\text{valid}}$ (e $\text{Sim}_{\max}(S) < \tau$) $\implies \text{Score} = \text{Structural\_Displacement} \times V(S)$; se $V(S) < \theta_{\text{valid}} \implies \text{Score} = 0.0$.
 
 ---
 

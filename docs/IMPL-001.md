@@ -1,3 +1,4 @@
+---
 okf_version: "0.2"
 document_id: "OKF-DOC-2026-ONTO-IMPL-001"
 title: "Guida all'Implementazione Computazionale e Architettura Low-Spec per ONTO-PROBE"
@@ -23,6 +24,7 @@ companion_documents:
   - id: "OKF-DOC-2026-ONTO-META-001"
     title: "Valutazione della Suite Documentale e Mappatura dei Gap Operativi per ONTO-PROBE"
     file: "META-001.md"
+---
 
 # OKF v0.2 — Guida all'Implementazione Computazionale: ONTO-PROBE (v0.3.1)
 
@@ -87,15 +89,13 @@ Il gateway di sicurezza agisce prima dell'estrazione semantica analizzando il pa
 ### 3.1 Ambiente Servizi Locali: Docker Compose (`docker-compose.yml`)
 
 ```yaml
-version: "3.8"
-
 services:
   # Vector Database locale per la metrica di distanza ontologica dagli archetipi
   qdrant-archetypes:
     image: qdrant/qdrant:v1.10.0
     container_name: ontocache-qdrant
     ports:
-      - "6333:6333"
+      - "127.0.0.1:6333:6333"
     volumes:
       - ./data/qdrant_storage:/qdrant/storage
     environment:
@@ -105,15 +105,16 @@ services:
         limits:
           memory: 512M
 
-  # Microservizio di sandboxing per verifica formale tramite Z3 (Binario A)
+  # Microservizio di sandboxing per verifica formale tramite Z3 (Binario A).
+  # Rete "internal": nessuna uscita verso Internet e nessuna porta pubblicata
+  # sull'host; è raggiungibile solo dai container collegati a "onto-sandbox".
   formal-verifier:
     build:
       context: ./verifier
       dockerfile: Dockerfile
     container_name: ontocache-verifier
-    ports:
-      - "8000:8000"
-    network_mode: "bridge"
+    networks:
+      - onto-sandbox
     cap_drop:
       - ALL
     read_only: true
@@ -124,7 +125,13 @@ services:
         limits:
           cpus: "1.0"
           memory: 256M
+
+networks:
+  onto-sandbox:
+    internal: true
 ```
+
+Per invocare il verificatore dall'host senza aprire la rete, eseguire il client in un container collegato a `onto-sandbox` (ad esempio `docker compose run --rm --network onto-sandbox ...`) oppure `docker exec ontocache-verifier python -c "..."`. Il file `verifier_service.py` va collocato in `./verifier/` accanto al `Dockerfile`.
 
 Dockerfile del modulo verificatore (`./verifier/Dockerfile`):
 ```dockerfile
@@ -149,6 +156,7 @@ app = FastAPI(title="Formal Verification Engine")
 
 class SmtVerificationRequest(BaseModel):
     smt_formula: str
+    expected: str = "sat"  # esito atteso del task: "sat" oppure "unsat" (es. A12: assenza di deadlock = "unsat")
     timeout_ms: int = 5000
 
 class VerificationResponse(BaseModel):
@@ -168,7 +176,10 @@ def verify_smt(request: SmtVerificationRequest):
         result = solver.check()
         
         status_str = str(result)
-        valid = (result == z3.sat)
+        if request.expected not in ("sat", "unsat"):
+            raise ValueError("expected deve essere 'sat' o 'unsat'")
+        # "unknown" (timeout o incompletezza del solver) non è mai valido
+        valid = (status_str == request.expected)
         
         return VerificationResponse(
             is_valid=valid,

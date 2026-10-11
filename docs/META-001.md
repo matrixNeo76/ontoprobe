@@ -1,3 +1,4 @@
+---
 okf_version: "0.2"
 document_id: "OKF-DOC-2026-ONTO-META-001"
 title: "Valutazione della Suite Documentale e Mappatura dei Gap Operativi per ONTO-PROBE"
@@ -22,6 +23,7 @@ companion_documents:
   - id: "OKF-DOC-2026-ONTO-EVAL-001"
     title: "Protocollo Sperimentale e Human Evaluation Runbook"
     file: "EVAL-001.md"
+---
 
 # OKF v0.2 — Valutazione della Suite Documentale: ONTO-PROBE (v0.3.1)
 
@@ -29,7 +31,7 @@ companion_documents:
 
 ### 1.1 Chiusura Formale della Release v0.3.1
 
-A seguito della seconda iterazione di peer review analitica, la suite documentale **ONTO-PROBE** raggiunge la piena coerenza operativa. Tutte le asimmetrie individuate (bug sintattico dei payload API, disaccoppiamento crittografico HMAC tra blinding e audit trail, inclusione della manipolazione cognitiva nel Safety Layer e calibrazione qualitativa del task B35) sono state formalmente risolte.
+A seguito della seconda iterazione di peer review analitica, la suite documentale **ONTO-PROBE** raggiunge la coerenza documentale interna. Nessun collaudo empirico è ancora stato eseguito: le percentuali della matrice di prontezza (§3) misurano la completezza della documentazione, non la validazione sperimentale. Tutte le asimmetrie individuate (bug sintattico dei payload API, disaccoppiamento crittografico HMAC tra blinding e audit trail, inclusione della manipolazione cognitiva nel Safety Layer e calibrazione qualitativa del task B35) sono state formalmente risolte.
 
 I 5 documenti formano una rete concettuale e operativa conforme allo standard **Google Open Knowledge Format (OKF) v0.2**.
 
@@ -67,15 +69,15 @@ I 5 documenti formano una rete concettuale e operativa conforme allo standard **
 
 ---
 
-## 3. Matrice di Prontezza Operativa Aggiornata
+## 3. Matrice di Prontezza Documentale e Operativa
 
 | Scenario di Utilizzo | Documenti Richiesti | Stato Attuale | Note di Esecuzione |
 |---|---|---|---|
-| **Sviluppo Software Locale** | `THEORY-001` + `IMPL-001` | **100% Pronto** | Stack Docker attivo, codice PyTorch e orchestratore con ruoli API corretti. |
-| **Sottomissione Paper / Pre-print** | `THEORY-001` + `IMPL-001` + `META-001` | **100% Pronto** | Apparato teorico rigoroso con limitazioni dell'embedder documentate. |
-| **Campagna Sperimentale Pilota** | `BENCH-001` + `EVAL-001` | **100% Pronto** | Sottogruppo di task pilota con blinding HMAC attivo. |
-| **Campagna Sperimentale Completa** | Tutti i 5 documenti | **95% Pronto** | Tutti i 50 task catalogati; solo 2 (B21, B35) hanno scheda analitica estesa, gli altri 48 una specifica sintetica che sarà espansa nella release v0.1.1 del benchmark. |
-| **Candidatura Grant Internazionale** | Suite Completa | **100% Pronto** | Raccordo costi trasparente (€500k istituzionale vs €1.200 standalone). |
+| **Sviluppo Software Locale** | `THEORY-001` + `IMPL-001` | **Documentazione completa** | Stack Docker, codice PyTorch e orchestratore con ruoli API corretti; collaudo CAA (`code/`) ancora da eseguire. |
+| **Sottomissione Paper / Pre-print** | `THEORY-001` + `IMPL-001` + `META-001` | **Documentazione completa** | Apparato teorico rigoroso con limitazioni dell'embedder documentate. |
+| **Campagna Sperimentale Pilota** | `BENCH-001` + `EVAL-001` | **Documentazione completa** | Sottogruppo di task pilota con blinding HMAC attivo. |
+| **Campagna Sperimentale Completa** | Tutti i 5 documenti | **Documentazione completa, benchmark da espandere** | Tutti i 50 task catalogati; solo 2 (B21, B35) hanno scheda analitica estesa, gli altri 48 una specifica sintetica che sarà espansa nella release v0.1.1 del benchmark. |
+| **Candidatura Grant Internazionale** | Suite Completa | **Documentazione completa** | Raccordo costi trasparente (€500k istituzionale vs €1.200 standalone). |
 
 ---
 

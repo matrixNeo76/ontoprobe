@@ -1,3 +1,4 @@
+---
 okf_version: "0.2"
 document_id: "OKF-DOC-2026-ONTO-THEORY-001"
 title: "Research Framework: Indagine, Misurazione e Mitigazione dei Limiti dell'Innovazione Ontologica negli LLM"
@@ -22,6 +23,7 @@ companion_documents:
   - id: "OKF-DOC-2026-ONTO-META-001"
     title: "Valutazione della Suite Documentale e Mappatura dei Gap Operativi per ONTO-PROBE"
     file: "META-001.md"
+---
 
 # OKF v0.2 — Research Framework: Innovazione Ontologica negli LLM (v0.3.1)
 
@@ -42,7 +44,7 @@ companion_documents:
 ### 0.3 Transizione da v0.2.1 a v0.3.0 (Chiusura dei Gap Metodologici)
 - Ridenominazione in *No New Basis Principle* (congettura empirico-strutturale).
 - Formalizzazione canonica di Contrastive Activation Addition (CAA).
-- Power Analysis ANOVA esatta per effetto moderato ($f = 0.25$, $N = 120\text{--}180$).
+- Power Analysis ANOVA per effetto moderato ($f = 0.25$, $N \ge 159$ per potenza 0.80; campione pianificato $N = 165\text{--}180$).
 - Introduzione del protocollo multi-embedder contro distorsioni OOD.
 
 ### 0.4 Release v0.3.1 (Rifinitura Operativa e Blinding)
@@ -70,12 +72,16 @@ L'infrastruttura assume una postura **falsificazionista**: se la chiusura geomet
 
 Ricerche empiriche recenti (Matarmaa 2026) su sette modelli di frontiera ($N = 168$ proposte analizzate) evidenziano un tasso di novità ontologica stretta nullo:
 
-$$\hat{p} = 0.000 \quad (95\% \text{ CI}: [0.000, 0.000])$$
+$$\hat{p} = 0/168 = 0.000 \quad (\text{limite superiore unilaterale al } 95\%\text{: } \approx 0.018, \text{ regola del tre; Clopper–Pearson bilaterale: } \approx 0.022)$$
 
-Il $98.2\%$ delle risposte è risultato riconducibile a ontologie preesistenti, collocandosi interamente entro il *convex hull* dei dati di pre-training:
+*(Con zero successi l'intervallo di confidenza non è degenere: il valore osservato è compatibile con tassi reali fino a circa 2%. Gli intervalli qui riportati sono ricalcolati dal solo conteggio $0/168$, non tratti dalla fonte.)*
+
+Il $98.2\%$ delle risposte è risultato riconducibile a ontologie preesistenti, collocandosi interamente entro il *convex hull* dei dati di pre-training. Le tre categorie principali, che sommano $82.7\%$, sono:
 - **Range Extension** ($20.2\%$): estrapolazione quantitativa o scalare di categorie note.
 - **Hybrid Combination** ($44.6\%$): fusione chimerica di concetti discreti preesistenti.
 - **Functional Recombination** ($17.9\%$): riassegnazione di funzioni ordinarie a contesti superficialmente eterogenei.
+
+Il residuo ($98.2\% - 82.7\% = 15.5\%$) è attribuito dalla fonte ad altre forme di riconducibilità non dettagliate in questo documento; la ripartizione completa va verificata sul testo originale di Matarmaa 2026.
 
 Tale evidenza corrobora il **No New Basis Principle**: la discesa del gradiente su un vocabolario discreto fisso $\mathcal{V}$ non può generare dimensioni semantiche ortogonali non espresse nel corpus di pre-training.
 
@@ -214,9 +220,11 @@ La determinazione della taglia campionaria per i referee umani ($0.2\text{ FTE} 
 $$\alpha = 0.05, \quad \text{Power } (1 - \beta) = 0.80, \quad \text{Effect Size } f = 0.25, \quad k = 3 \text{ condizioni}$$
 
 L'analisi della varianza (ANOVA a misure ripetute) su 3 condizioni generative (C1: Single, C2: MAS standard, C3: ONTO-PROBE) attraverso i 5 domini sperimentali ($15\text{ celle}$):
-- **Campione per cella:** $n = 8\text{--}12$ valutazioni cieche indipendenti.
-- **Volume totale:** $N = 120\text{--}180$ valutazioni complessive.
-- **Impegno operativo stimato:** Con $30\text{ minuti}$ per dossier, il fabbisogno complessivo è di **$60\text{--}90\text{ ore}$** su 12 mesi, perfettamente gestibile da 0.2 FTE.
+- **Campione per cella:** $n = 11\text{--}12$ valutazioni cieche indipendenti.
+- **Volume totale:** $N = 165\text{--}180$ valutazioni complessive.
+- **Verifica della potenza:** per un'ANOVA a una via con $k = 3$, $f = 0.25$, $\alpha = 0.05$ servono $N \ge 159$ totali per potenza $0.80$ (con $N = 120$ la potenza scende a $\approx 0.68$; con $N = 165$ è $\approx 0.82$; con $N = 180$ è $\approx 0.86$). Il disegno a misure ripetute sui task è più efficiente di quello a gruppi indipendenti, quindi $N = 165$ è una stima conservativa.
+- **Domini coperti:** la valutazione umana copre tutti e 5 i domini. Per i domini del Binario A (D1, D2) la validità funzionale è stabilita dal verificatore formale; il referee valuta le restanti dimensioni della scheda (cfr. EVAL-001 §3.2).
+- **Impegno operativo stimato:** Con $30\text{ minuti}$ per dossier, il fabbisogno complessivo è di **$83\text{--}90\text{ ore}$** su 12 mesi, gestibile da 0.2 FTE ($\approx 8$ ore/settimana, oltre 400 ore/anno).
 
 ### 3.5 Safety Monitoring Layer e Catena di Audit Crittografica
 
