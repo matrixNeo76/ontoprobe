@@ -17,7 +17,8 @@ build:
 	$(PYTHON) tools/build_tasks.py
 
 check: test build
-	git diff --exit-code -- code/notebook_caa_smoke_test_v0_3_2.ipynb code/blackbox/data/tasks_b.json
+	@changes="$$(git status --porcelain -- code/notebook_caa_smoke_test_v0_3_2.ipynb code/blackbox/data/tasks_b.json)"; \
+	if [ -n "$$changes" ]; then echo "$$changes"; echo "Generated files are stale or not committed. Commit the result of 'make build'."; exit 1; fi
 
 mock:
 	$(PYTHON) code/run_blackbox.py all --run-id mock --limit 6 --mock

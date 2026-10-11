@@ -68,3 +68,4 @@ qualitative_dossier.md
 # Tracked data files (generated task list must be versioned)
 !code/blackbox/data/
 !code/blackbox/data/*.json
+!code/notebook_caa_smoke_test_v0_3_2.ipynb

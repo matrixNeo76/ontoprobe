@@ -40,7 +40,12 @@ jobs:
         run: |
           python tools/build_notebook.py
           python tools/build_tasks.py
-      - name: Fail if regeneration changed tracked files
+      - name: Fail if generated files are missing, untracked or stale
         run: |
-          git diff --exit-code -- code/notebook_caa_smoke_test_v0_3_2.ipynb code/blackbox/data/tasks_b.json \
-            || { echo "::error::Generated files are stale. Run 'make build' and commit the result."; exit 1; }
+          # git status catches modified AND untracked/missing files (git diff alone would miss untracked ones)
+          changes="$(git status --porcelain -- code/notebook_caa_smoke_test_v0_3_2.ipynb code/blackbox/data/tasks_b.json)"
+          if [ -n "$changes" ]; then
+            echo "$changes"
+            echo "::error::Generated files are stale or not committed. Run 'make build' and commit the result."
+            exit 1
+          fi
