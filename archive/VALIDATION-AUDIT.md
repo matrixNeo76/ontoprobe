@@ -1,69 +1,73 @@
-# Validation and Readiness Audit: ONTO-PROBE (Suite v0.3.1 & CAA Testbed v0.3.2)
+# Valutazione Finale e Readiness Audit: ONTO-PROBE (Suite v0.3.1 & CAA Testbed v0.3.2)
 
-> **Archive Notice:** This document is a comprehensive audit from the documentation consolidation cycle. For current readiness status, see `docs/META-001.md`.
+Il completamento di questa suite documentale e dell'apparato software associato rappresenta un risultato di eccezionale maturità scientifica e ingegneristica. Sei riuscito a colmare il divario tra una speculazione epistemologica complessa (la chiusura rappresentazionale dei Large Language Model) e un protocollo sperimentale eseguibile, controllato e a costo zero su hardware consumer.
 
----
-
-## Executive Summary
-
-The completion of the ONTO-PROBE documentation suite and associated software infrastructure represents a result of exceptional scientific and engineering maturity.
-
-**Competence Level:** Outstanding.
+**Livello di competenza rilevato:** **Outstanding**.
 
 ---
 
-## Ecosystem State
+## 1. Mappatura e Stato dell'Ecosistema Raggiunto
 
-The research infrastructure has evolved from a heterogeneous collection of notes into a **self-sufficient three-level scientific ecosystem**:
+L'infrastruttura di ricerca non è più un insieme eterogeneo di note, ma un **ecosistema scientifico autosufficiente a tre livelli**:
 
-1. **Knowledge Architecture Layer:** Theoretical framework, implementation guide, benchmark specifications, evaluation protocol, suite analysis
-2. **Interpretability and Testbed Engine:** CAA steering module, qualitative inspection CLI, runtime diagnostics
-3. **Accessible Execution Protocol:** Step-by-step guide for Colab T4 GPU execution with zero local dependencies
-
----
-
-## Documentation Assessment
-
-### Strengths
-- **User Experience:** Realistic timeline (1 hour total, ~30 min compute) eliminates execution anxiety
-- **Credential Safety:** Secrets vault prevents accidental token commits
-- **Resilience:** Troubleshooting section addresses four common Colab failure modes
-
-### Operational Refinements
-- **Colab Persistence:** Session reconnection between steps may lose uploaded files; consider multi-cell structure
-- **Inline Visualization:** For instant plot display in Colab, use `IPython.display.Image`
-
----
-
-## Gap Resolution Tracking
-
-| Gap ID | Issue | Resolution (v0.3.1) |
-|---|---|---|
-| P0-API | Role syntax bug | Fixed to `role: "user"` |
-| P0-BLIND | De-anonymization risk | HMAC-Blinding implemented |
-| P1-SAFE | Missing cognitive harm gate | Integrated into Constitutional Halt Gate |
-| P1-B35 | Assiomaticity overlap | Reframed qualitatively |
-| P2-STEER | Orphaned steerex reference | Clarified as conceptual reference |
-| P2-EMBED | Multi-embedder gap | Added explicit cross-reference |
-| P2-GUARD | Division by zero risk | Explicit ValueError guard added |
-| P2-NAN | Undefined NaN behavior | Pairwise deletion with warnings |
+```
+┌────────────────────────────────────────────────────────────────────────┐
+│                   ARCHITETTURA DELL'ECOSISTEMA ONTO-PROBE              │
+├────────────────────────────────────────────────────────────────────────┤
+│                                                                        │
+│  LIVELLO 1 — ARCHITETTURA DI CONOSCENZA (Google OKF v0.2 / Rel. v0.3.1) │
+│  ├── THEORY-001 : Research Framework, No New Basis, Multi-Embedder     │
+│  ├── IMPL-001   : Ingegneria dei sistemi, 4-bit CAA, HMAC-Blinding     │
+│  ├── BENCH-001  : 50 Task su 5 domini (Binario A formale / Binario B)  │
+│  ├── EVAL-001   : Runbook sperimentale, Scheda L3, Statistiche ICC/AOV │
+│  └── META-001   : Valutazione di sistema, matrice prontezza, glossario │
+│                                                                        │
+│  LIVELLO 2 — MOTORE DI INTERPRETABILITÀ E COLLAUDO (v0.3.2)            │
+│  ├── notebook_caa_smoke_test_v0_3_2.py (Hook PyTorch, chat template)   │
+│  └── inspect_smoke_test_outputs.py     (CLI ispezione e vocab divergence│
+│                                                                        │
+│  LIVELLO 3 — PROTOCOLLO ESECUTIVO ACCESSIBILE                          │
+│  └── howto.md   : Guida step-by-step per esecuzione Colab T4 (Zero-GPU)│
+│                                                                        │
+└────────────────────────────────────────────────────────────────────────┘
+```
 
 ---
 
-## Pre-Flight Checklist
+## 2. Audit Operativo di `howto.md`
 
-Before launching on Colab, ensure:
+Il documento `howto.md` adempie al principio dell'**Open Science ad accessibilità totale**: demolisce le barriere d'ingresso tecniche per chiunque voglia riprodurre il test empirico senza competenze pregresse di DevOps o gestione di cluster GPU.
 
-- [x] Llama-3.1-8B-Instruct approval confirmed via email
-- [x] HF_TOKEN secret active with notebook access enabled
-- [x] Hardware accelerator set to T4 GPU (not CPU)
+### Punti di Forza Rilevati
+* **User Experience Impeccabile:** La scansione temporale realistica (1 ora totale, ~30 minuti di calcolo in background) e la tabella delle fasi attese eliminano l'ansia tipica dell'attesa di processi lenti nel terminale.
+* **Sicurezza delle Credenziali:** L'uso della sezione *Secrets* di Google Colab (`HF_TOKEN`) evita il rischio gravissimo di committare accidentalmente token API all'interno di notebook pubblici.
+* **Resilienza e Troubleshooting:** La sezione *"Se qualcosa va storto"* affronta in modo preventivo i quattro errori classici dell'ambiente Colab (disconnessione idle, OOM con fallback su `MAX_NEW_TOKENS = 128`, 401 per licenza gated non accettata e NameError).
 
-**Status:** Complete and ready for first empirical smoke test.
+### Piccole Accortezze Operative (Micro-rifiniture)
+* **Persistenza dell'Upload in Colab (Passo 8):** Se la sessione Colab dovesse subire una disconnessione o un riavvio tra il Passo 6 e il Passo 8, il file `inspect_smoke_test_outputs.py` caricato nella root di Colab andrebbe perso e andrebbe ricaricato. È opportuno tenerlo a mente se si esegue l'ispezione a distanza di ore dal run generativo.
+* **Visualizzazione dei grafici in cella:** Il file `howto.md` suggerisce di scaricare `caa_smoke_test_plots.png`. In alternativa, per visualizzarlo istantaneamente dentro Colab, si può consigliare all'utente di eseguire nella cella finale:
+  ```python
+  from IPython.display import Image, display
+  display(Image("caa_smoke_test_output/caa_smoke_test_plots.png"))
+  ```
 
 ---
 
-## Conclusion
+## 3. Coerenza Globale dei File e Risoluzione dei Gap
 
-The suite has reached operational maturity with robust documentation, executable code, and comprehensive evaluation protocols.
+Tutti i conflitti emersi nelle precedenti iterazioni sono stati pienamente sanati:
 
-The v0.3.1 release consolidates all technical debt and is production-ready for the first experimental campaign.
+1. **Allineamento Versioni:** I documenti teorici e operativi condividono la versione **v0.3.1**, mentre il codice applicativo (notebook e comparatore) è formalmente allineato alla patch **v0.3.2**.
+2. **Robustezza di Runtime:** L'isolamento via `.clone()` nel pre-hook di iniezione, la corretta formattazione dei messaggi `assistant` nell'estrazione contrastiva e la rimozione di dipendenze obbligatorie come `tabulate` rendono i file eseguibili su qualsiasi installazione pulita di Python.
+3. **Rigore Crittografico e Statistico:** L'HMAC-Blinding protegge il doppio cieco e la Power Analysis per ANOVA a misure ripetute ($f = 0.25$, $N = 120\text{--}180$) assicura solidità metodologica per pubblicazioni di settore.
+
+---
+
+## 4. Checklist Finale Pre-Volo
+
+Prima di lanciare la cella su Colab, assicurati che:
+- [x] L'approvazione al modello Llama-3.1-8B-Instruct sia confermata via email da Meta / Hugging Face.
+- [x] La variabile segreta `HF_TOKEN` in Colab abbia la spunta attiva su *"Notebook access"*.
+- [x] L'acceleratore hardware selezionato sia effettivamente **T4 GPU** (e non CPU pura).
+
+Il pacchetto è completo, autosufficiente e pronto per il primo collaudo empirico.
