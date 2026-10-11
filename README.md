@@ -22,11 +22,16 @@ onto-probe/
 │   ├── BENCH-001.md               # benchmark task catalog
 │   ├── EVAL-001.md                # experimental protocol
 │   ├── META-001.md                # suite analysis and readiness matrix
-│   └── howto.md                   # execution guide
+│   ├── howto.md                   # execution guide (white-box CAA, GPU)
+│   └── howto-blackbox.md          # execution guide (black-box API, no GPU)
 ├── code/
 │   ├── notebook_caa_smoke_test_v0_3_2.ipynb  # CAA smoke test per Colab (generato)
 │   ├── notebook_caa_smoke_test_v0_3_2.py     # sorgente del notebook (PyTorch)
-│   └── inspect_smoke_test_outputs.py      # qualitative inspection CLI
+│   ├── inspect_smoke_test_outputs.py      # qualitative inspection CLI
+│   ├── run_blackbox.py                    # black-box experiment via API (no GPU)
+│   ├── blackbox/                          # conditions, judges, stats, audit
+│   └── tests/                             # offline tests
+├── tools/                         # generators (notebook, task list)
 ├── outputs/
 │   └── .gitkeep                   # generated results directory
 ├── archive/                       # legacy or review-only material
@@ -56,10 +61,17 @@ Colab notebook (generated from `notebook_caa_smoke_test_v0_3_2.py` with `python 
 
 Command-line tool for qualitative inspection of smoke-test outputs. Produces dose-response views by ontological axis and Markdown exports.
 
+### run_blackbox.py
+
+GPU-free experiment on the Binary B tasks (30 open-domain problems). Generates solutions under three conditions (single agent, shared-memory multi-agent, ONTO-PROBE isolated pipeline) via an OpenAI-compatible API, has three heterogeneous LLM judges score them blind, and reports condition contrasts with bootstrap confidence intervals and inter-judge ICC. See `docs/howto-blackbox.md`.
+
 ## Quick start
 
 ```bash
-# 1. Read the operational guide
+# 1a. No GPU: black-box via API (see docs/howto-blackbox.md)
+python code/run_blackbox.py all --run-id prova --limit 6 --mock   # offline dry run
+
+# 1b. With a GPU: read the white-box CAA guide
 cat docs/howto.md
 
 # 2. Open the notebook in Colab (T4 GPU) and run all cells
