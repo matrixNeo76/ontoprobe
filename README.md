@@ -1,111 +1,115 @@
 # ONTO-PROBE
 
-Un progetto di ricerca per rispondere a una domanda: **un modello linguistico (LLM) può inventare idee davvero nuove, oppure rimescola soltanto ciò che ha già visto in addestramento?**
+🌐 **English** · [Italiano](README.it.md)
 
-Per "idee nuove" si intendono nuove relazioni causali, nuovi predicati e nuovi schemi esplicativi che non siano una semplice interpolazione o ricombinazione di modelli noti (gli *archetipi*).
+A research project built around one question: **can a large language model (LLM) invent genuinely new ideas, or does it only recombine what it has already seen during training?**
 
-> **Stato: pre-esecuzione.** Documentazione e codice sono completi e testati offline, ma **nessun esperimento reale è stato ancora eseguito**: non ci sono risultati. Il repository oggi è un protocollo pronto da lanciare, non una conferma di alcuna ipotesi.
+"New ideas" here means new causal relations, new predicates and new explanatory structures that are not mere interpolations or recombinations of known models (the *archetypes*).
 
-## L'idea in breve
+> **Status: pre-execution.** Documentation and code are complete and tested offline, but **no real experiment has been run yet**, so there are no results. Today this repository is a ready-to-run protocol, not a confirmation of any hypothesis.
 
-Il progetto parte da un'ipotesi da mettere alla prova, non da una tesi da difendere. L'ipotesi è il *No New Basis Principle*: un modello addestrato su un vocabolario fisso non può generare dimensioni concettuali davvero ortogonali a quelle del suo corpus. Se è vera, l'esperimento lo mostrerà misurando fino a dove si spinge la divergenza prima che l'output diventi incoerente. Se è falsa, emergeranno soluzioni valide e lontane dagli archetipi. In entrambi i casi il risultato è informativo.
+## The idea in brief
 
-Per misurarlo il progetto combina:
+The project starts from a hypothesis to test, not a thesis to defend. The hypothesis is the *No New Basis Principle*: a model trained on a fixed vocabulary cannot generate conceptual dimensions that are truly orthogonal to those of its corpus. If it holds, the experiment will show it by measuring how far divergence can be pushed before the output turns incoherent. If it does not, valid solutions far from the archetypes will emerge. Either outcome is informative.
 
-- **un benchmark di 50 problemi** (O-Novel): 20 con risposta verificabile da un programma (Z3, ProVerif) e 30 aperti, con divieti sulle soluzioni ovvie (i *tabù semantici*);
-- **tre condizioni a confronto**: un singolo agente, più agenti che condividono la memoria, e la pipeline ONTO-PROBE con agenti isolati e vincoli di generazione;
-- **una valutazione alla cieca**: giudici LLM eterogenei e, dove non concordano, referee umani, con identificatori mascherati (HMAC) e una catena di audit;
-- **un controllo statistico**: accordo tra giudici (ICC), intervalli di confidenza e verifica che l'effetto superi il rumore.
+To measure this, the project combines:
 
-## Due modi di eseguirlo
+- **a 50-problem benchmark** (O-Novel): 20 with an answer a program can verify (Z3, ProVerif) and 30 open-ended, with bans on the obvious solutions (*semantic taboos*);
+- **three conditions compared**: a single agent, several agents sharing memory, and the ONTO-PROBE pipeline with isolated agents and generation constraints;
+- **blind evaluation**: heterogeneous LLM judges and, where they disagree, human referees, with masked identifiers (HMAC) and an audit chain;
+- **statistical controls**: inter-judge agreement (ICC), confidence intervals, and a check that the effect exceeds noise.
+
+## Two ways to run it
 
 | | **Black-box via API** | **White-box CAA** |
 |---|---|---|
-| Cosa fa | Chiede soluzioni a modelli commerciali e le fa valutare alla cieca da altri modelli | Entra nelle attivazioni di Llama-3.1-8B e le sposta lungo assi ontologici (*Contrastive Activation Addition*) |
-| Hardware | Nessuno: basta Python e una chiave API | GPU NVIDIA con almeno 8 GB (es. Colab T4 gratuita) |
-| Costo | Pochi centesimi per il pilota (stima, da verificare sui prezzi reali) | Gratuito su Colab, circa 45 minuti |
-| Stato | Pipeline completa, testata offline; mai eseguita con un'API reale | Notebook pronto; mai eseguito |
-| Guida | [`docs/howto-blackbox.md`](docs/howto-blackbox.md) | [`docs/howto.md`](docs/howto.md) |
+| What it does | Asks commercial models for solutions and has other models score them blind | Reaches into Llama-3.1-8B's activations and shifts them along ontological axes (*Contrastive Activation Addition*) |
+| Hardware | None: Python and an API key are enough | NVIDIA GPU with at least 8 GB (e.g. free Colab T4) |
+| Cost | A few cents for the pilot (estimate, check real prices) | Free on Colab, about 45 minutes |
+| Status | Full pipeline, tested offline; never run against a real API | Notebook ready; never run |
+| Guide | [`docs/howto-blackbox.md`](docs/howto-blackbox.md) | [`docs/howto.md`](docs/howto.md) |
 
-**Se non hai una GPU, parti dal black-box.** Il collaudo white-box è un controllo preliminare sulla tecnica di steering, non una condizione per il resto.
+**If you have no GPU, start with black-box.** The white-box smoke test is a preliminary check on the steering technique, not a prerequisite for the rest.
 
-## Come iniziare
+The guides in `docs/` are written in Italian.
 
-### Senza GPU (black-box)
+## Getting started
+
+### Without a GPU (black-box)
 
 ```bash
-# 1. Prova a secco: offline, gratis, i numeri sono casuali ma verifica che tutto giri
+# 1. Dry run: offline, free; numbers are random but it checks that everything runs
 python code/run_blackbox.py all --run-id prova --limit 6 --mock
 
-# 2. Stima di chiamate e costo
+# 2. Estimate calls and cost
 python code/run_blackbox.py estimate --limit 6
 
-# 3. Pilota reale (serve una chiave API, vedi la guida)
-export ONTO_API_KEY="la-tua-chiave"
+# 3. Real pilot (needs an API key, see the guide)
+export ONTO_API_KEY="your-key"
 python code/run_blackbox.py all --run-id pilot --limit 6
 ```
 
-Il risultato è `outputs/blackbox/pilot/report.md`. Requisiti: Python 3.9+, nessuna libreria da installare.
+The result is `outputs/blackbox/pilot/report.md`. Requirements: Python 3.9+, no libraries to install.
 
-### Con una GPU (white-box)
+### With a GPU (white-box)
 
-Apri il notebook in Colab e scegli "Runtime → Run all":
-[![Apri in Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/matrixNeo76/ontoprobe/blob/main/code/notebook_caa_smoke_test_v0_3_2.ipynb)
+Open the notebook in Colab and choose "Runtime → Run all":
+[![Open in Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/matrixNeo76/ontoprobe/blob/main/code/notebook_caa_smoke_test_v0_3_2.ipynb)
 
-Servono un account HuggingFace con accesso a Llama-3.1-8B-Instruct e il token salvato nei Secrets di Colab (`HF_TOKEN`). Tutti i passi sono in [`docs/howto.md`](docs/howto.md).
+You need a HuggingFace account with access to Llama-3.1-8B-Instruct and the token saved in Colab Secrets (`HF_TOKEN`). All steps are in [`docs/howto.md`](docs/howto.md).
 
-### Test
+### Tests
 
 ```bash
 python -m unittest discover -s code/tests
 ```
 
-22 test, tutti offline.
+22 tests, all offline.
 
-## Cosa contiene
+## What's inside
 
 ```text
-├── docs/            documentazione del progetto (vedi tabella sotto)
+├── docs/            project documentation (see table below)
 ├── code/
-│   ├── run_blackbox.py                     avvio dell'esperimento black-box
-│   ├── blackbox/                           condizioni, giudici, statistiche, audit
-│   ├── notebook_caa_smoke_test_v0_3_2.ipynb  collaudo CAA per Colab (generato)
-│   ├── notebook_caa_smoke_test_v0_3_2.py   sorgente del notebook
-│   ├── inspect_smoke_test_outputs.py       ispezione qualitativa dei risultati CAA
-│   └── tests/                              test offline
-├── tools/           generatori: notebook .ipynb e lista dei task
-├── outputs/         risultati generati (ignorata da git)
-└── archive/         materiale storico e note di revisione
+│   ├── run_blackbox.py                       black-box experiment entry point
+│   ├── blackbox/                             conditions, judges, statistics, audit
+│   ├── notebook_caa_smoke_test_v0_3_2.ipynb  CAA smoke test for Colab (generated)
+│   ├── notebook_caa_smoke_test_v0_3_2.py     notebook source
+│   ├── inspect_smoke_test_outputs.py         qualitative inspection of CAA results
+│   └── tests/                                offline tests
+├── tools/           generators: .ipynb notebook and task list
+├── outputs/         generated results (git-ignored)
+└── archive/         historical material and review notes
 ```
 
-| Documento | A cosa serve |
+| Document | Purpose |
 |---|---|
-| [`THEORY-001`](docs/THEORY-001.md) | Quadro teorico, definizione di novità ontologica, metodologia, rischi |
-| [`IMPL-001`](docs/IMPL-001.md) | Architettura tecnica e codice di riferimento |
-| [`BENCH-001`](docs/BENCH-001.md) | Catalogo dei 50 task e specifiche del benchmark |
-| [`EVAL-001`](docs/EVAL-001.md) | Protocollo sperimentale, rubriche dei giudici, scheda del referee umano, statistica |
-| [`META-001`](docs/META-001.md) | Valutazione della suite, glossario, roadmap |
-| [`howto-blackbox.md`](docs/howto-blackbox.md) | Guida passo-passo al percorso via API |
-| [`howto.md`](docs/howto.md) | Guida passo-passo al collaudo CAA su Colab |
+| [`THEORY-001`](docs/THEORY-001.md) | Theoretical framework, definition of ontological novelty, methodology, risks |
+| [`IMPL-001`](docs/IMPL-001.md) | Technical architecture and reference code |
+| [`BENCH-001`](docs/BENCH-001.md) | Catalog of the 50 tasks and benchmark specifications |
+| [`EVAL-001`](docs/EVAL-001.md) | Experimental protocol, judge rubrics, human referee form, statistics |
+| [`META-001`](docs/META-001.md) | Suite assessment, glossary, roadmap |
+| [`howto-blackbox.md`](docs/howto-blackbox.md) | Step-by-step guide to the API path |
+| [`howto.md`](docs/howto.md) | Step-by-step guide to the CAA smoke test on Colab |
 
-I documenti teorici sono in italiano e seguono il formato OKF v0.2.
+The theory documents are in Italian and follow the OKF v0.2 format.
 
-## Limiti da conoscere
+## Known limitations
 
-- **Misura la novità percepita da giudici LLM**, non una novità ontologica dimostrata. Un risultato positivo va confermato con referee umani.
-- **Il black-box non fa steering interno**: il seed sintattico è un surrogato di ciò che la CAA farebbe sulle attivazioni.
-- **Manca la distanza dagli archetipi**: il database da 2.000 voci non è stato costruito e la soglia τ è provvisoria.
-- **I 20 task formali (Binario A)** non sono ancora inclusi nel percorso black-box.
-- **Pochi task, intervalli larghi**: il pilota da 6 task verifica la pipeline e stima il rumore; non basta per concludere.
-- **Premesse da verificare**: i dati empirici di partenza (Matarmaa 2026) non sono stati controllati sulla fonte.
+- **It measures novelty as perceived by LLM judges**, not demonstrated ontological novelty. A positive result must be confirmed with human referees.
+- **Black-box does no internal steering**: the syntactic seed is a surrogate for what CAA would do on the activations.
+- **The archetype distance is missing**: the 2,000-entry database has not been built and the threshold τ is provisional.
+- **The 20 formal tasks (Track A)** are not yet part of the black-box path.
+- **Few tasks, wide intervals**: the 6-task pilot checks the pipeline and estimates noise; it is not enough to draw conclusions.
+- **Premises to verify**: the starting empirical data (Matarmaa 2026) has not been checked against the source.
 
-## Cosa questo repository non afferma
+## What this repository does not claim
 
-Non sostiene che gli LLM possano o non possano raggiungere un'innovazione ontologica autentica. Fornisce un modo per porre la domanda in forma verificabile.
+It does not claim that LLMs can or cannot achieve genuine ontological innovation. It provides a way to pose the question in a verifiable form.
 
-## Licenza
+## License
 
-- Documentazione (`docs/`): CC BY 4.0
-- Codice (`code/`): Apache 2.0
+- Documentation (`docs/`): CC BY 4.0
+- Code (`code/`): Apache 2.0
 
-Il file `LICENSE` con il testo completo non è ancora presente nel repository.
+The `LICENSE` file with the full text is not in the repository yet.
