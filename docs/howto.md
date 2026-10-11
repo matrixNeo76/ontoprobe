@@ -9,7 +9,7 @@ Questa guida ti accompagna dall'inizio alla fine nell'esecuzione del primo colla
 1. **Un account Google** (per Google Colab, il modo più semplice)
 2. **Un account HuggingFace** (per scaricare il modello Llama)
 3. **Un browser** (Chrome, Firefox, Safari vanno tutti bene)
-4. **Circa 1 ora** di tempo, di cui 30 minuti di attesa automatica
+4. **Circa 1 ora e mezza** di tempo, di cui circa 45 minuti di attesa automatica
 
 Niente installazioni sul tuo computer. Niente GPU. Tutto gratis.
 
@@ -109,7 +109,7 @@ Se preferisci la struttura a celle (più comoda per il debug):
 
 ---
 
-## Passo 6 — Eseguire il notebook (30 minuti di attesa)
+## Passo 6 — Eseguire il notebook (circa 45 minuti di attesa)
 
 1. Posiziona il cursore sulla cella con il codice
 2. Premi **Shift + Invio** (o clicca sull'icona ▶ a sinistra della cella)
@@ -125,9 +125,9 @@ Se preferisci la struttura a celle (più comoda per il debug):
 | Configurazione parametri | 1 sec | Vedi stampati "Modello: ...", "Layer di intervento: 16" |
 | Caricamento del modello | 3-5 min | Vedi "VRAM totale: 15.0 GB → budget GPU: 13 GiB" e "Modello caricato in XXXs" |
 | Estrazione dei 3 vettori | 1-2 min | Vedi "Vettore estratto — norma L2: ..." tre volte |
-| Generazione dei 19 output | 3-5 min | Vedi il testo scorrere e alla fine "Completata: 19 output" |
-| Calcolo delle metriche | 5-8 min | Vedi una tabella con PPL, trigrammi, similarità |
-| Valutazione dei criteri | 1 sec | Vedi "✅ PASS" o "❌ FAIL" per ciascun criterio |
+| Generazione dei 84 output (3 semi) | 15-20 min | Vedi il contatore `[n/84]` e alla fine "Completata: 84 output" |
+| Calcolo delle metriche | 8-12 min | Vedi una tabella con PPL, trigrammi, similarità (media sui semi) |
+| Valutazione dei criteri | 1 sec | Vedi la tabella del controllo casuale e "✅ PASS" o "❌ FAIL" per ciascuno dei 7 criteri |
 | Report finale e grafici | 1 min | Vedi "REPORT CAA SMOKE TEST" e due grafici |
 
 ### Se qualcosa va storto
@@ -146,8 +146,9 @@ Al termine dell'esecuzione, il notebook ha salvato tutto nella cartella `caa_smo
 1. Nel pannello a sinistra di Colab, clicca sull'icona a forma di **cartella** (📁)
 2. Trovi la cartella `caa_smoke_test_output`
 3. Aprila e scarica sul tuo computer questi tre file:
-   - `results_with_metrics.csv` (i dati completi)
+   - `results_with_metrics.csv` (i dati completi, con colonne `kind` e `seed`)
    - `report.txt` (il verdetto)
+   - `control_table.csv` (effetto degli assi reali contro i controlli casuali)
    - `caa_smoke_test_plots.png` (i grafici)
 
 ---
@@ -176,6 +177,9 @@ L'output apparirà nella cella: vedrai il baseline, poi i tre assi ontologici a 
 # Confronto a un α diverso
 !python inspect_smoke_test_outputs.py --alpha 2.0
 
+# Un altro seed (di default si mostra il più basso); i controlli casuali compaiono come assi random_*
+!python inspect_smoke_test_outputs.py --alpha 1.5 --seed 43
+
 # Salva il dossier Markdown in un percorso a scelta
 # (il dossier viene sempre esportato; di default in ./caa_smoke_test_output/qualitative_dossier.md)
 !python inspect_smoke_test_outputs.py --alpha 1.5 --export-md ./dossier.md
@@ -185,11 +189,11 @@ L'output apparirà nella cella: vedrai il baseline, poi i tre assi ontologici a 
 
 ## Cosa fare dopo aver visto i risultati
 
-Il notebook produce un verdetto binario:
+Il notebook produce un verdetto binario su 7 criteri. I due che contano di più sono quelli di controllo: l'effetto dell'asse deve superare sia quello di un **vettore casuale della stessa norma** sia il **rumore di fondo** tra semi diversi.
 
-**ESITO PASS** → la CAA funziona, il framework regge, si può procedere al collaudo dell'Embedder (fase successiva).
+**ESITO PASS** → la CAA produce un effetto sistematico e specifico. Non dimostra che l'asse catturi davvero la dimensione ontologica voluta: leggi i testi con `inspect_smoke_test_outputs.py` e confronta gli assi con i controlli `random_*` prima di procedere al collaudo dell'Embedder.
 
-**ESITO FAIL** → il report ti dice quale criterio è fallito e cosa ritoccare ($\alpha$ massimo, layer, coppie contrastanti). In questo caso, **conserva il contenuto di `report.txt`** e analizza i criteri falliti prima di rilanciare.
+**ESITO FAIL** → il report ti dice quale criterio è fallito. Se falliscono i criteri 6 o 7, l'effetto non è distinguibile da rumore o da una spinta casuale: aumenta le coppie contrastanti per asse, prova un altro layer e rilancia. **Conserva sempre `report.txt` e `control_table.csv`**: anche un esito negativo è un dato.
 
 ---
 

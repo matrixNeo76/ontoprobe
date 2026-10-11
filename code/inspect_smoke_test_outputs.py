@@ -222,6 +222,12 @@ def main():
         help="Nome dell'asse specifico da analizzare in progressione dose-risposta.",
     )
     parser.add_argument(
+        "--seed",
+        type=int,
+        default=None,
+        help="Seme da visualizzare (default: il più basso presente). I controlli casuali compaiono come assi 'random_*'.",
+    )
+    parser.add_argument(
         "--export-md",
         type=Path,
         default=Path("./caa_smoke_test_output/qualitative_dossier.md"),
@@ -244,6 +250,14 @@ def main():
             file=sys.stderr,
         )
         sys.exit(1)
+
+    if "seed" in df.columns:
+        seed = args.seed if args.seed is not None else int(df["seed"].min())
+        df = df[df["seed"] == seed]
+        if df.empty:
+            print(f"Errore: nessun dato per il seed {seed}.", file=sys.stderr)
+            sys.exit(1)
+        print(f"[Seed] Visualizzazione del seed {seed}")
 
     if args.axis:
         display_dose_response_table(df, args.axis)
