@@ -64,3 +64,7 @@ qualitative_dossier.md
 # Secrets
 .hmac_key
 *.key
+
+# Tracked data files (generated task list must be versioned)
+!code/blackbox/data/
+!code/blackbox/data/*.json
