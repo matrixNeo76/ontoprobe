@@ -17,9 +17,9 @@ This document tracks the correspondence between old filenames (from main branch)
 | `notebook/revisione_tecnica_e_patch_del_notebook_caa_smoke_test.md` | `archive/IMPLEMENTATION-NOTES.md` | Historical review |
 | `dossier_di_validazione_finale_e_audit_operativo.md` | `archive/VALIDATION-AUDIT.md` | Historical review |
 
-## Archived originals
+## Content note
 
-The original long-named root files are preserved unchanged in this directory (`archive/<legacy file name>`). The `docs/` versions are the condensed canonical ones.
+The canonical files in `docs/` and `code/` are the full original documents and scripts, renamed. A first reorganization had replaced them with condensed rewrites that dropped code, task specs and procedures; those rewrites were discarded.
 
 ## Rationale
 
