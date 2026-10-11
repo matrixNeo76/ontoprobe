@@ -103,6 +103,10 @@ The theory documents are in Italian and follow the OKF v0.2 format.
 - **Few tasks, wide intervals**: the 6-task pilot checks the pipeline and estimates noise; it is not enough to draw conclusions.
 - **Premises to verify**: the starting empirical data (Matarmaa 2026) has not been checked against the source.
 
+## Roadmap
+
+What is done, what is next, and the actions pending for the owner: [`ROADMAP.md`](ROADMAP.md) (in Italian).
+
 ## Contributing and citing
 
 See [`CONTRIBUTING.md`](CONTRIBUTING.md), the [Code of Conduct](CODE_OF_CONDUCT.md) and [`SECURITY.md`](SECURITY.md). To cite the project use [`CITATION.cff`](CITATION.cff) (GitHub shows a "Cite this repository" button). Guidance for LLM coding agents is in [`AGENTS.md`](AGENTS.md).
