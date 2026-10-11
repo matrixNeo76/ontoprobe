@@ -101,6 +101,10 @@ I documenti teorici sono in italiano e seguono il formato OKF v0.2.
 - **Pochi task, intervalli larghi**: il pilota da 6 task verifica la pipeline e stima il rumore; non basta per concludere.
 - **Premesse da verificare**: i dati empirici di partenza (Matarmaa 2026) non sono stati controllati sulla fonte.
 
+## Roadmap
+
+Cosa è stato fatto, cosa viene dopo e le azioni in sospeso per il proprietario: [`ROADMAP.md`](ROADMAP.md).
+
 ## Contribuire e citare
 
 Vedi [`CONTRIBUTING.md`](CONTRIBUTING.md), il [Codice di condotta](CODE_OF_CONDUCT.md) e [`SECURITY.md`](SECURITY.md). Per citare il progetto usa [`CITATION.cff`](CITATION.cff). Le istruzioni per gli agenti LLM sono in [`AGENTS.md`](AGENTS.md).

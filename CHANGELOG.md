@@ -7,6 +7,7 @@ documentation/testbed versions used in the project (suite v0.3.1, CAA testbed v0
 ## [Unreleased]
 
 ### Added
+- `ROADMAP.md`: work done, planned work and pending owner actions.
 - Community and repository files: `LICENSE` (Apache-2.0), `LICENSE-DOCS` (CC BY 4.0), `NOTICE`,
   `CONTRIBUTING.md`, `CODE_OF_CONDUCT.md`, `SECURITY.md`, `CITATION.cff`, `CHANGELOG.md`,
   `AGENTS.md` / `CLAUDE.md` (guidance for LLM coding agents), issue and PR templates, CODEOWNERS,
