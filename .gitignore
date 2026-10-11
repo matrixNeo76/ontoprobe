@@ -60,3 +60,7 @@ qualitative_dossier.md
 # Environment variables
 .env
 .env.local
+
+# Secrets
+.hmac_key
+*.key
