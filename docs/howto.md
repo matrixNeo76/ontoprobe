@@ -17,15 +17,15 @@ Niente installazioni sul tuo computer. Niente GPU. Tutto gratis.
 
 ## File necessari
 
-Prima di iniziare, assicurati che nella cartella del progetto ci siano questi tre file (la guida è in `docs/`, gli script in `code/`):
+Per eseguire il collaudo ti basta il notebook; gli altri file sono di supporto:
 
 | File | Cosa contiene |
 |---|---|
-| `howto.md` | Questa guida |
-| `notebook_caa_smoke_test_v0_3_2.py` | Il collaudo da eseguire |
-| `inspect_smoke_test_outputs.py` | L'analizzatore dei risultati |
+| `docs/howto.md` | Questa guida |
+| `code/notebook_caa_smoke_test_v0_3_2.ipynb` | Il collaudo da eseguire in Colab |
+| `code/inspect_smoke_test_outputs.py` | L'analizzatore dei risultati (scaricato in automatico dal notebook) |
 
-Il nome corto `inspect_smoke_test_outputs.py` è quello usato nei comandi. Il materiale storico è in `archive/` e non serve per l'esecuzione.
+Il materiale storico è in `archive/` e non serve per l'esecuzione.
 
 ---
 
@@ -81,41 +81,36 @@ Fatto. Il notebook potrà accedere al modello senza che tu debba scrivere il tok
 
 ---
 
-## Passo 5 — Preparare il notebook in Colab (5 minuti)
+## Passo 5 — Aprire il notebook in Colab (2 minuti)
 
-Il file del collaudo è in formato `.py` con marcatori `# %%` (celle separate). Colab si aspetta un `.ipynb`, ma c'è una scorciatoia.
+Il collaudo è un vero notebook Colab: `code/notebook_caa_smoke_test_v0_3_2.ipynb`. Non devi copiare né incollare codice.
 
-### Metodo consigliato — Conversione in una cella unica
+### Metodo consigliato — Apri da GitHub
 
-1. Sul tuo computer, apri `notebook_caa_smoke_test_v0_3_2.py` con un editor di testo (Blocco Note su Windows, TextEdit su Mac vanno bene)
-2. **Seleziona tutto** il contenuto (Ctrl+A / Cmd+A)
-3. **Copia** (Ctrl+C / Cmd+C)
-4. Torna su Colab
-5. Nella prima cella di codice, **incolla** il contenuto (Ctrl+V)
+1. In Colab: **"File" → "Apri notebook" → scheda "GitHub"**
+2. Incolla `matrixNeo76/ontoprobe` e scegli `code/notebook_caa_smoke_test_v0_3_2.ipynb`
 
-Colab tratterà i marcatori `# %%` come semplici commenti. Il codice funzionerà correttamente anche in una cella unica, con un'unica accortezza: **eseguirai tutto in un colpo solo**, e se qualcosa va storto dovrai ripartire dall'inizio.
+Oppure apri direttamente: https://colab.research.google.com/github/matrixNeo76/ontoprobe/blob/main/code/notebook_caa_smoke_test_v0_3_2.ipynb
 
-### Metodo alternativo — Celle separate
+(Il link funziona quando le modifiche sono su `main`. Prima del merge, sostituisci `main` con il nome del branch.)
 
-Se preferisci la struttura a celle (più comoda per il debug):
+### Metodo alternativo — Carica il file
 
-1. Dividi il contenuto del file `.py` in corrispondenza di ogni riga `# %%`
-2. In Colab crea una cella di codice per ogni blocco (**"+ Codice"**) e incolla un blocco per cella
-3. Esegui le celle in ordine, dall'alto verso il basso
+1. Scarica `notebook_caa_smoke_test_v0_3_2.ipynb` dal repository
+2. In Colab: **"File" → "Carica notebook"** e seleziona il file
 
-(Rinominare il file `.py` in `.ipynb` non funziona: Colab si aspetta un formato JSON e rifiuterebbe il file.)
+### Il file `.py`
 
-**Se non sei sicuro, usa il metodo consigliato.** Funziona sempre.
+`notebook_caa_smoke_test_v0_3_2.py` è la fonte del notebook (formato con marcatori `# %%`). Se lo modifichi, rigenera il `.ipynb` con `python tools/build_notebook.py`. Non va incollato in Colab.
 
 ---
 
 ## Passo 6 — Eseguire il notebook (circa 45 minuti di attesa)
 
-1. Posiziona il cursore sulla cella con il codice
-2. Premi **Shift + Invio** (o clicca sull'icona ▶ a sinistra della cella)
-3. Appare una rotellina accanto alla cella: sta eseguendo
-4. **Aspetta** e osserva gli output che appaiono sotto la cella
-5. Quando la rotellina sparisce, l'esecuzione è conclusa
+1. Menu **"Runtime" → "Run all"** (Esegui tutto)
+2. Se Colab chiede l'accesso ai Secrets, concedilo
+3. **Aspetta** e osserva gli output sotto le celle
+4. A fine esecuzione l'ultima cella scarica da sola lo zip dei risultati
 
 ### Cosa aspettarti durante l'esecuzione
 
@@ -133,40 +128,33 @@ Se preferisci la struttura a celle (più comoda per il debug):
 ### Se qualcosa va storto
 
 - **"Runtime disconnected"** → la sessione Colab è scaduta per inattività. Ricarica la pagina e riesegui dall'inizio.
-- **"CUDA out of memory"** → la GPU non ce la fa. Vai su Runtime → Disconnect and delete runtime, poi ricomincia. Se succede di nuovo, apri il file `.py` con un editor, cerca `MAX_NEW_TOKENS = 256` e cambialo in `MAX_NEW_TOKENS = 128`.
+- **"CUDA out of memory"** → la GPU non ce la fa. Vai su Runtime → Disconnect and delete runtime, poi ricomincia. Se succede di nuovo, nella cella "Configurazione globale" del notebook cambia `MAX_NEW_TOKENS = 256` in `MAX_NEW_TOKENS = 128`, oppure riduci `SEEDS` a due semi.
 - **"Repository not found" o errore 401** → il token HuggingFace non è impostato bene. Torna al Passo 4.
-- **"NameError: name 'xxx' is not defined"** → hai saltato una cella. Riesegui tutto dall'inizio.
+- **"NameError: name 'xxx' is not defined"** → hai saltato una cella. Usa **"Runtime" → "Run all"**.
 
 ---
 
 ## Passo 7 — Scaricare i risultati (1 minuto)
 
-Al termine dell'esecuzione, il notebook ha salvato tutto nella cartella `caa_smoke_test_output` dentro Colab.
+L'ultima cella crea `caa_smoke_test_output.zip` e ne avvia il download. Se il download viene bloccato dal browser, apri il pannello cartella (📁) e scaricalo da lì. Lo zip contiene:
 
-1. Nel pannello a sinistra di Colab, clicca sull'icona a forma di **cartella** (📁)
-2. Trovi la cartella `caa_smoke_test_output`
-3. Aprila e scarica sul tuo computer questi tre file:
-   - `results_with_metrics.csv` (i dati completi, con colonne `kind` e `seed`)
-   - `report.txt` (il verdetto)
-   - `control_table.csv` (effetto degli assi reali contro i controlli casuali)
-   - `caa_smoke_test_plots.png` (i grafici)
+- `results_with_metrics.csv` (i dati completi, con colonne `kind` e `seed`)
+- `report.txt` (il verdetto)
+- `control_table.csv` (effetto degli assi reali contro i controlli casuali)
+- `caa_smoke_test_plots.png` (i grafici)
+- `qualitative_dossier.md` (il dossier di ispezione)
 
 ---
 
-## Passo 8 — Eseguire lo script di ispezione (5 minuti)
+## Passo 8 — Ispezione qualitativa (già inclusa)
 
-Lo script di ispezione analizza gli output e ti mostra i tre assi ontologici fianco a fianco. Si esegue sempre in Colab.
+La penultima cella del notebook scarica `inspect_smoke_test_outputs.py` dal repository e mostra i tre assi ontologici a $\alpha = 1.5$ con il testo generato e le metriche, salvando anche il dossier Markdown.
 
-1. Nel pannello cartella a sinistra (📁), clicca sull'icona **"Upload"** (freccia su)
-2. Seleziona il file `inspect_smoke_test_outputs.py` dal tuo computer
-3. Apri una **nuova cella di codice** in fondo al notebook Colab
-4. Incolla questo comando e premi Shift+Invio:
+Se la cella non riesce a scaricare lo script (ad esempio prima del merge su `main`: modifica `REPO_REF` con il nome del branch), carica a mano `code/inspect_smoke_test_outputs.py` nel pannello cartella (📁) e lancia in una nuova cella:
 
 ```python
-!python inspect_smoke_test_outputs.py --alpha 1.5
+!python inspect_smoke_test_outputs.py --input caa_smoke_test_output/results_with_metrics.csv --alpha 1.5
 ```
-
-L'output apparirà nella cella: vedrai il baseline, poi i tre assi ontologici a $\alpha = 1.5$, ciascuno con il testo generato e le metriche.
 
 ### Comandi alternativi utili
 
@@ -203,7 +191,7 @@ I tre punti in cui le persone si bloccano più spesso:
 
 1. **Il token HuggingFace** (Passo 1): se l'accesso al modello è negato, aspetta 24 ore o scrivi a Meta tramite il form
 2. **La GPU T4 non disponibile** (Passo 3): Colab a volte non ne ha libere. Riprova dopo qualche minuto o in un altro orario
-3. **Il copia-incolla del codice** (Passo 5): se perdi pezzi, i marcatori `# %%` non vanno rimossi — devono restare come commenti
+3. **L'accesso ai Secrets** (Passo 4): se la cella "Token HuggingFace" segnala un errore, controlla che `HF_TOKEN` esista e che "Notebook access" sia attivo
 
 ---
 
@@ -212,7 +200,8 @@ I tre punti in cui le persone si bloccano più spesso:
 | File | Quando si usa |
 |---|---|
 | `howto.md` | Lo leggi prima e durante, per seguire i passi |
-| `notebook_caa_smoke_test_v0_3_2.py` | Passo 5-6: lo incolli in Colab per eseguire il collaudo |
-| `inspect_smoke_test_outputs.py` | Passo 8: lo carichi in Colab per analizzare i risultati |
+| `notebook_caa_smoke_test_v0_3_2.ipynb` | Passo 5-6: lo apri in Colab ed esegui tutto |
+| `notebook_caa_smoke_test_v0_3_2.py` | Fonte del notebook: si modifica solo se vuoi cambiare il collaudo |
+| `inspect_smoke_test_outputs.py` | Passo 8: scaricato in automatico dal notebook |
 
 Nient'altro è necessario. Buon collaudo.

@@ -255,6 +255,17 @@ class LowVramOntologicalSteerer:
 
 
 # %%
+# @title Token HuggingFace (Colab Secrets)
+# Se il secret HF_TOKEN è impostato in Colab (icona chiave) lo si passa all'ambiente.
+# Fuori da Colab, o con la variabile d'ambiente già impostata, la cella non fa nulla.
+try:
+    from google.colab import userdata
+    if not os.environ.get("HF_TOKEN"):
+        os.environ["HF_TOKEN"] = userdata.get("HF_TOKEN")
+except Exception as e:
+    print(f"[HF] Token non letto da Colab Secrets ({type(e).__name__}); uso la configurazione di default.")
+
+# %%
 # @title Caricamento modello
 t0 = time.time()
 steerer = LowVramOntologicalSteerer()
@@ -619,3 +630,31 @@ plt.savefig(OUTPUT_DIR / "caa_smoke_test_plots.png", dpi=120)
 plt.close()
 
 print(f"\n[Fine] Tutti gli artefatti sono stati salvati in: {OUTPUT_DIR.resolve()}")
+
+# %%
+# @title Ispezione qualitativa (scarica lo script di ispezione dal repository)
+import subprocess
+REPO_REF = "main"  # branch o tag del repository da cui scaricare lo script
+INSPECT_URL = f"https://raw.githubusercontent.com/matrixNeo76/ontoprobe/{REPO_REF}/code/inspect_smoke_test_outputs.py"
+try:
+    subprocess.check_call(["wget", "-q", "-O", "inspect_smoke_test_outputs.py", INSPECT_URL])
+    subprocess.call([
+        sys.executable, "inspect_smoke_test_outputs.py",
+        "--input", str(OUTPUT_DIR / "results_with_metrics.csv"),
+        "--alpha", "1.5",
+        "--export-md", str(OUTPUT_DIR / "qualitative_dossier.md"),
+    ])
+except Exception as e:
+    print(f"[Ispezione] Script non scaricato ({e}). Caricalo a mano da code/ e lancia:\n"
+          f"  !python inspect_smoke_test_outputs.py --input {OUTPUT_DIR}/results_with_metrics.csv --alpha 1.5")
+
+# %%
+# @title Scarica tutti i risultati (zip)
+import shutil
+archive = shutil.make_archive("caa_smoke_test_output", "zip", OUTPUT_DIR)
+print(f"[Zip] Creato: {archive}")
+try:
+    from google.colab import files
+    files.download(archive)
+except Exception:
+    print("[Zip] Fuori da Colab: scarica a mano il file indicato sopra.")

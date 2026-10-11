@@ -24,7 +24,8 @@ onto-probe/
 │   ├── META-001.md                # suite analysis and readiness matrix
 │   └── howto.md                   # execution guide
 ├── code/
-│   ├── notebook_caa_smoke_test_v0_3_2.py  # CAA smoke test (PyTorch)
+│   ├── notebook_caa_smoke_test_v0_3_2.ipynb  # CAA smoke test per Colab (generato)
+│   ├── notebook_caa_smoke_test_v0_3_2.py     # sorgente del notebook (PyTorch)
 │   └── inspect_smoke_test_outputs.py      # qualitative inspection CLI
 ├── outputs/
 │   └── .gitkeep                   # generated results directory
@@ -45,9 +46,11 @@ onto-probe/
 
 ## Code
 
-### notebook_caa_smoke_test_v0_3_2.py
+### notebook_caa_smoke_test_v0_3_2.ipynb
 
-Smoke test for the LowVramOntologicalSteerer class. It extracts three ontological steering vectors via Contrastive Activation Addition on meta-llama/Llama-3.1-8B-Instruct, applies them across a generation grid, and produces quantitative diagnostics.
+Colab notebook (generated from `notebook_caa_smoke_test_v0_3_2.py` with `python tools/build_notebook.py`). Smoke test for the LowVramOntologicalSteerer class. It extracts three ontological steering vectors via Contrastive Activation Addition on meta-llama/Llama-3.1-8B-Instruct, applies them across a generation grid with multiple seeds, compares each axis against a norm-matched random-vector control and the baseline sampling noise, and produces quantitative diagnostics.
+
+[Open in Colab](https://colab.research.google.com/github/matrixNeo76/ontoprobe/blob/main/code/notebook_caa_smoke_test_v0_3_2.ipynb)
 
 ### inspect_smoke_test_outputs.py
 
@@ -59,11 +62,11 @@ Command-line tool for qualitative inspection of smoke-test outputs. Produces dos
 # 1. Read the operational guide
 cat docs/howto.md
 
-# 2. Execute the smoke test on Colab (T4 GPU)
+# 2. Open the notebook in Colab (T4 GPU) and run all cells
 # Follow steps 1–8 of docs/howto.md
 
-# 3. Inspect results
-python code/inspect_smoke_test_outputs.py --alpha 1.5
+# 3. Re-inspect downloaded results locally
+python code/inspect_smoke_test_outputs.py --input path/to/results_with_metrics.csv --alpha 1.5
 ```
 
 ## Scope
