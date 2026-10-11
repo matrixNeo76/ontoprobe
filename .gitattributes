@@ -1,0 +1,5 @@
+* text=auto eol=lf
+*.ipynb linguist-generated=true
+code/blackbox/data/tasks_b.json linguist-generated=true
+LICENSE linguist-documentation
+LICENSE-DOCS linguist-documentation

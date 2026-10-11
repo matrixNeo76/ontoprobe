@@ -103,6 +103,10 @@ The theory documents are in Italian and follow the OKF v0.2 format.
 - **Few tasks, wide intervals**: the 6-task pilot checks the pipeline and estimates noise; it is not enough to draw conclusions.
 - **Premises to verify**: the starting empirical data (Matarmaa 2026) has not been checked against the source.
 
+## Contributing and citing
+
+See [`CONTRIBUTING.md`](CONTRIBUTING.md), the [Code of Conduct](CODE_OF_CONDUCT.md) and [`SECURITY.md`](SECURITY.md). To cite the project use [`CITATION.cff`](CITATION.cff) (GitHub shows a "Cite this repository" button). Guidance for LLM coding agents is in [`AGENTS.md`](AGENTS.md).
+
 ## What this repository does not claim
 
 It does not claim that LLMs can or cannot achieve genuine ontological innovation. It provides a way to pose the question in a verifiable form.
@@ -112,4 +116,4 @@ It does not claim that LLMs can or cannot achieve genuine ontological innovation
 - Documentation (`docs/`): CC BY 4.0
 - Code (`code/`): Apache 2.0
 
-The `LICENSE` file with the full text is not in the repository yet.
+Full texts: [`LICENSE`](LICENSE) (Apache-2.0) and [`LICENSE-DOCS`](LICENSE-DOCS) (CC BY 4.0).

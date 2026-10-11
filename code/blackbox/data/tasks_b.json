@@ -1,0 +1,313 @@
+[
+  {
+    "id": "ONTO-B21",
+    "domain": "system_design",
+    "title": "Raffreddamento Passivo ad Altissima Densità Energetica (500 W/cm²)",
+    "statement": "Raffreddamento Passivo ad Altissima Densità Energetica (500 W/cm²)",
+    "taboo": [
+      "heat pipe a transizione di fase convenzionale liquido-vapore (acqua, ammoniaca, sodio, litio)",
+      "moduli Peltier/Seebeck",
+      "convezione forzata a ventole"
+    ],
+    "feasibility_hint": "Trasporto fononico coerente, metamateriali a radiazione selettiva o transizioni solido-solido reversibili.",
+    "validity_note": ""
+  },
+  {
+    "id": "ONTO-B22",
+    "domain": "system_design",
+    "title": "Attuazione meccanica per micro-robotica senza attuatori rotativi, pistoni o leghe a memoria di forma",
+    "statement": "Attuazione meccanica per micro-robotica senza attuatori rotativi, pistoni o leghe a memoria di forma.",
+    "taboo": [
+      "attuatori rotativi",
+      "pistoni",
+      "leghe a memoria di forma"
+    ],
+    "feasibility_hint": ""
+  },
+  {
+    "id": "ONTO-B23",
+    "domain": "system_design",
+    "title": "Dissalazione e filtrazione continua a bassa energia senza membrane a osmosi inversa o evaporazione termica",
+    "statement": "Dissalazione e filtrazione continua a bassa energia senza membrane a osmosi inversa o evaporazione termica.",
+    "taboo": [
+      "membrane a osmosi inversa",
+      "evaporazione termica"
+    ],
+    "feasibility_hint": ""
+  },
+  {
+    "id": "ONTO-B24",
+    "domain": "system_design",
+    "title": "Accumulo energetico stazionario stagionale senza reazioni elettrochimiche di batteria o accumulo idroelettrico/gravitazionale standard",
+    "statement": "Accumulo energetico stazionario stagionale senza reazioni elettrochimiche di batteria o accumulo idroelettrico/gravitazionale standard.",
+    "taboo": [
+      "reazioni elettrochimiche di batteria",
+      "accumulo idroelettrico/gravitazionale standard"
+    ],
+    "feasibility_hint": ""
+  },
+  {
+    "id": "ONTO-B25",
+    "domain": "system_design",
+    "title": "Monitoraggio integrato di ponti e gallerie senza trasduttori piezoelettrici, estensimetri convenzionali o cablaggio elettrico attivo",
+    "statement": "Monitoraggio integrato di ponti e gallerie senza trasduttori piezoelettrici, estensimetri convenzionali o cablaggio elettrico attivo.",
+    "taboo": [
+      "trasduttori piezoelettrici",
+      "estensimetri convenzionali",
+      "cablaggio elettrico attivo"
+    ],
+    "feasibility_hint": ""
+  },
+  {
+    "id": "ONTO-B26",
+    "domain": "system_design",
+    "title": "Giunzione strutturale reversibile ad alta pressione priva di filettature, saldature termiche o adesivi chimici",
+    "statement": "Giunzione strutturale reversibile ad alta pressione priva di filettature, saldature termiche o adesivi chimici.",
+    "taboo": [
+      "filettature",
+      "saldature termiche",
+      "adesivi chimici"
+    ],
+    "feasibility_hint": ""
+  },
+  {
+    "id": "ONTO-B27",
+    "domain": "system_design",
+    "title": "Dissipazione sismica per edifici alti senza smorzatori a massa accordata o isolatori elastomerici alla base",
+    "statement": "Dissipazione sismica per edifici alti senza smorzatori a massa accordata o isolatori elastomerici alla base.",
+    "taboo": [
+      "smorzatori a massa accordata",
+      "isolatori elastomerici alla base"
+    ],
+    "feasibility_hint": ""
+  },
+  {
+    "id": "ONTO-B28",
+    "domain": "system_design",
+    "title": "Isolamento criogenico aerospaziale ultra-leggero senza aerogel, schiume poliuretaniche o pannelli sottovuoto convenzionali",
+    "statement": "Isolamento criogenico aerospaziale ultra-leggero senza aerogel, schiume poliuretaniche o pannelli sottovuoto convenzionali.",
+    "taboo": [
+      "aerogel",
+      "schiume poliuretaniche",
+      "pannelli sottovuoto convenzionali"
+    ],
+    "feasibility_hint": ""
+  },
+  {
+    "id": "ONTO-B29",
+    "domain": "system_design",
+    "title": "Lubrificazione ad altissimo carico in ambienti di vuoto spinto priva di oli sintetici, grassi o grafite/MoS2",
+    "statement": "Lubrificazione ad altissimo carico in ambienti di vuoto spinto priva di oli sintetici, grassi o grafite/MoS2.",
+    "taboo": [
+      "oli sintetici",
+      "grassi",
+      "grafite/MoS2"
+    ],
+    "feasibility_hint": ""
+  },
+  {
+    "id": "ONTO-B30",
+    "domain": "system_design",
+    "title": "Conversione fotonica ad alta efficienza priva di giunzioni p-n semiconduttrici o celle a colorante organico",
+    "statement": "Conversione fotonica ad alta efficienza priva di giunzioni p-n semiconduttrici o celle a colorante organico.",
+    "taboo": [
+      "giunzioni p-n semiconduttrici",
+      "celle a colorante organico"
+    ],
+    "feasibility_hint": ""
+  },
+  {
+    "id": "ONTO-B31",
+    "domain": "policy",
+    "title": "Allocazione idrica transfrontaliera senza mercati delle quote, diritti storici o autorità sanzionatorie sovranazionali",
+    "statement": "Allocazione idrica transfrontaliera senza mercati delle quote, diritti storici o autorità sanzionatorie sovranazionali.",
+    "taboo": [
+      "mercati delle quote",
+      "diritti storici",
+      "autorità sanzionatorie sovranazionali"
+    ],
+    "feasibility_hint": ""
+  },
+  {
+    "id": "ONTO-B32",
+    "domain": "policy",
+    "title": "Contrasto dell'evasione fiscale su transazioni digitali senza monitoraggio di conti bancari né cashback di stato",
+    "statement": "Contrasto dell'evasione fiscale su transazioni digitali senza monitoraggio di conti bancari né cashback di stato.",
+    "taboo": [
+      "monitoraggio di conti bancari",
+      "cashback di stato"
+    ],
+    "feasibility_hint": ""
+  },
+  {
+    "id": "ONTO-B33",
+    "domain": "policy",
+    "title": "Distribuzione etica di risorse mediche d'emergenza con verificabilità pubblica e prevenzione del favoritismo sistemico",
+    "statement": "Distribuzione etica di risorse mediche d'emergenza con verificabilità pubblica e prevenzione del favoritismo sistemico.",
+    "taboo": [],
+    "feasibility_hint": ""
+  },
+  {
+    "id": "ONTO-B34",
+    "domain": "policy",
+    "title": "Bonifica di suoli contaminati da parte di privati senza incentivi a fondo perduto né sgravi fiscali ordinari",
+    "statement": "Bonifica di suoli contaminati da parte di privati senza incentivi a fondo perduto né sgravi fiscali ordinari.",
+    "taboo": [
+      "incentivi a fondo perduto",
+      "sgravi fiscali ordinari"
+    ],
+    "feasibility_hint": ""
+  },
+  {
+    "id": "ONTO-B35",
+    "domain": "policy",
+    "title": "Mitigazione della Polarizzazione nei Forum Civici Digitali",
+    "statement": "Mitigazione della Polarizzazione nei Forum Civici Digitali",
+    "taboo": [
+      "moderatori umani",
+      "filtri censori lessicali",
+      "shadowbanning o downranking algoritmico opaco"
+    ],
+    "feasibility_hint": "",
+    "validity_note": "Architettura relazionale e matrice di incentivo del dibattito che premi la convergenza cross-fazione; la validità CDAT valuta la stabilità qualitativa contro tentativi di gaming strategico, polarizzazione riflessiva ed evasione della sintesi."
+  },
+  {
+    "id": "ONTO-B36",
+    "domain": "policy",
+    "title": "Previdenza intergenerazionale autonoma resiliente al calo demografico priva di trasferimenti a ripartizione pura o fondi a capitalizzazione azionaria pura",
+    "statement": "Previdenza intergenerazionale autonoma resiliente al calo demografico priva di trasferimenti a ripartizione pura o fondi a capitalizzazione azionaria pura.",
+    "taboo": [
+      "trasferimenti a ripartizione pura",
+      "fondi a capitalizzazione azionaria pura"
+    ],
+    "feasibility_hint": ""
+  },
+  {
+    "id": "ONTO-B37",
+    "domain": "policy",
+    "title": "Gestione sostenibile dei beni comuni forestali senza recinzioni fisiche né concessioni statali monopolistiche",
+    "statement": "Gestione sostenibile dei beni comuni forestali senza recinzioni fisiche né concessioni statali monopolistiche.",
+    "taboo": [
+      "recinzioni fisiche",
+      "concessioni statali monopolistiche"
+    ],
+    "feasibility_hint": ""
+  },
+  {
+    "id": "ONTO-B38",
+    "domain": "policy",
+    "title": "Risoluzione di contenziosi su confini marittimi e zone economiche esclusive senza arbitrati internazionali a verdetto binario",
+    "statement": "Risoluzione di contenziosi su confini marittimi e zone economiche esclusive senza arbitrati internazionali a verdetto binario.",
+    "taboo": [
+      "arbitrati internazionali a verdetto binario"
+    ],
+    "feasibility_hint": ""
+  },
+  {
+    "id": "ONTO-B39",
+    "domain": "policy",
+    "title": "Riduzione dell'inquinamento luminoso urbano senza coprifuoco energetico né sensori individuali di movimento su ciascun lampione",
+    "statement": "Riduzione dell'inquinamento luminoso urbano senza coprifuoco energetico né sensori individuali di movimento su ciascun lampione.",
+    "taboo": [
+      "coprifuoco energetico",
+      "sensori individuali di movimento su ciascun lampione"
+    ],
+    "feasibility_hint": ""
+  },
+  {
+    "id": "ONTO-B40",
+    "domain": "policy",
+    "title": "Regolazione dell'accesso a farmaci salvavita ad alto costo senza violazione del brevetto industriale né sussidio pubblico totale",
+    "statement": "Regolazione dell'accesso a farmaci salvavita ad alto costo senza violazione del brevetto industriale né sussidio pubblico totale.",
+    "taboo": [
+      "violazione del brevetto industriale",
+      "sussidio pubblico totale"
+    ],
+    "feasibility_hint": ""
+  },
+  {
+    "id": "ONTO-B41",
+    "domain": "information_theory",
+    "title": "Codifica di canale in regime di SNR persistentemente negativo senza codici lineari (Hamming, Reed-Solomon, LDPC) né ritrasmissione ARQ",
+    "statement": "Codifica di canale in regime di SNR persistentemente negativo senza codici lineari (Hamming, Reed-Solomon, LDPC) né ritrasmissione ARQ.",
+    "taboo": [
+      "codici lineari (Hamming, Reed-Solomon, LDPC)",
+      "ritrasmissione ARQ"
+    ],
+    "feasibility_hint": ""
+  },
+  {
+    "id": "ONTO-B42",
+    "domain": "information_theory",
+    "title": "Metrica di complessità causale non-lineare non riducibile all'entropia di Kolmogorov-Sinai o alla dimensione frattale",
+    "statement": "Metrica di complessità causale non-lineare non riducibile all'entropia di Kolmogorov-Sinai o alla dimensione frattale.",
+    "taboo": [],
+    "feasibility_hint": ""
+  },
+  {
+    "id": "ONTO-B43",
+    "domain": "information_theory",
+    "title": "Criterio di corroborazione empirica per fenomeni rari non replicabili in laboratorio indipendente dal p-value fisheriano",
+    "statement": "Criterio di corroborazione empirica per fenomeni rari non replicabili in laboratorio indipendente dal p-value fisheriano.",
+    "taboo": [],
+    "feasibility_hint": ""
+  },
+  {
+    "id": "ONTO-B44",
+    "domain": "information_theory",
+    "title": "Compressione dati lossy semantica basata sull'invarianza delle relazioni topologiche funzionali",
+    "statement": "Compressione dati lossy semantica basata sull'invarianza delle relazioni topologiche funzionali.",
+    "taboo": [],
+    "feasibility_hint": ""
+  },
+  {
+    "id": "ONTO-B45",
+    "domain": "information_theory",
+    "title": "Definizione operativa di emergenza causale in automi cellulari priva di osservatore esterno soggettivo",
+    "statement": "Definizione operativa di emergenza causale in automi cellulari priva di osservatore esterno soggettivo.",
+    "taboo": [
+      "osservatore esterno soggettivo"
+    ],
+    "feasibility_hint": ""
+  },
+  {
+    "id": "ONTO-B46",
+    "domain": "information_theory",
+    "title": "Rappresentazione topologica di serie temporali caotiche resistente alla deriva di regime stocastico",
+    "statement": "Rappresentazione topologica di serie temporali caotiche resistente alla deriva di regime stocastico.",
+    "taboo": [],
+    "feasibility_hint": ""
+  },
+  {
+    "id": "ONTO-B47",
+    "domain": "information_theory",
+    "title": "Quantificazione della ridondanza semantica cross-linguistica indipendente da matrici di co-occorrenza lessicale",
+    "statement": "Quantificazione della ridondanza semantica cross-linguistica indipendente da matrici di co-occorrenza lessicale.",
+    "taboo": [],
+    "feasibility_hint": ""
+  },
+  {
+    "id": "ONTO-B48",
+    "domain": "information_theory",
+    "title": "Risoluzione di paradossi ontologici in basi di conoscenza aperte mediante logiche paraconsistenti computabili",
+    "statement": "Risoluzione di paradossi ontologici in basi di conoscenza aperte mediante logiche paraconsistenti computabili.",
+    "taboo": [],
+    "feasibility_hint": ""
+  },
+  {
+    "id": "ONTO-B49",
+    "domain": "information_theory",
+    "title": "Modello di inferenza scientifica abduttiva automatica guidato dalla minimizzazione dell'attrito esplicativo",
+    "statement": "Modello di inferenza scientifica abduttiva automatica guidato dalla minimizzazione dell'attrito esplicativo.",
+    "taboo": [],
+    "feasibility_hint": ""
+  },
+  {
+    "id": "ONTO-B50",
+    "domain": "information_theory",
+    "title": "Formalizzazione della causalità retroattiva vincolata per simulazioni controfattuali in sistemi complessi",
+    "statement": "Formalizzazione della causalità retroattiva vincolata per simulazioni controfattuali in sistemi complessi.",
+    "taboo": [],
+    "feasibility_hint": ""
+  }
+]

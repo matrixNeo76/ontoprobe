@@ -1,0 +1,51 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  tests:
+    name: Tests (Python ${{ matrix.python-version }})
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ["3.9", "3.10", "3.11", "3.12", "3.13"]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+      - name: Compile all Python sources
+        run: python -m compileall -q code tools
+      - name: Run offline unit tests
+        run: python -m unittest discover -s code/tests -v
+      - name: Black-box dry run (mock client, no network)
+        run: python code/run_blackbox.py all --run-id ci --limit 3 --mock --out "$RUNNER_TEMP/bb"
+
+  generated-files:
+    name: Generated files are up to date
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Regenerate notebook and task list
+        run: |
+          python tools/build_notebook.py
+          python tools/build_tasks.py
+      - name: Fail if generated files are missing, untracked or stale
+        run: |
+          # git status catches modified AND untracked/missing files (git diff alone would miss untracked ones)
+          changes="$(git status --porcelain -- code/notebook_caa_smoke_test_v0_3_2.ipynb code/blackbox/data/tasks_b.json)"
+          if [ -n "$changes" ]; then
+            echo "$changes"
+            echo "::error::Generated files are stale or not committed. Run 'make build' and commit the result."
+            exit 1
+          fi

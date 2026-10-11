@@ -1,0 +1,12 @@
+# Only needed to run the white-box CAA smoke test locally on an NVIDIA GPU (>= 8 GB).
+# On Colab the notebook installs these by itself. The black-box pipeline needs nothing.
+torch
+transformers>=4.44
+accelerate>=0.33
+bitsandbytes>=0.43
+sentence-transformers>=3.0
+nltk>=3.9
+pandas
+matplotlib
+pyarrow
+tabulate

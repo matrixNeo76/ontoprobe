@@ -101,6 +101,10 @@ I documenti teorici sono in italiano e seguono il formato OKF v0.2.
 - **Pochi task, intervalli larghi**: il pilota da 6 task verifica la pipeline e stima il rumore; non basta per concludere.
 - **Premesse da verificare**: i dati empirici di partenza (Matarmaa 2026) non sono stati controllati sulla fonte.
 
+## Contribuire e citare
+
+Vedi [`CONTRIBUTING.md`](CONTRIBUTING.md), il [Codice di condotta](CODE_OF_CONDUCT.md) e [`SECURITY.md`](SECURITY.md). Per citare il progetto usa [`CITATION.cff`](CITATION.cff). Le istruzioni per gli agenti LLM sono in [`AGENTS.md`](AGENTS.md).
+
 ## Cosa questo repository non afferma
 
 Non sostiene che gli LLM possano o non possano raggiungere un'innovazione ontologica autentica. Fornisce un modo per porre la domanda in forma verificabile.
@@ -110,4 +114,4 @@ Non sostiene che gli LLM possano o non possano raggiungere un'innovazione ontolo
 - Documentazione (`docs/`): CC BY 4.0
 - Codice (`code/`): Apache 2.0
 
-Il file `LICENSE` con il testo completo non è ancora presente nel repository.
+Testi completi: [`LICENSE`](LICENSE) (Apache-2.0) e [`LICENSE-DOCS`](LICENSE-DOCS) (CC BY 4.0).

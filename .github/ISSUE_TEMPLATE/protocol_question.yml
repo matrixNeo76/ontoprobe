@@ -1,0 +1,28 @@
+name: Protocol or methodology question
+description: A concern about the experimental design, metrics, thresholds, rubrics or the theory documents
+labels: ["methodology"]
+body:
+  - type: dropdown
+    id: doc
+    attributes:
+      label: Which document is concerned?
+      options:
+        - THEORY-001
+        - IMPL-001
+        - BENCH-001
+        - EVAL-001
+        - META-001
+        - Other
+    validations:
+      required: true
+  - type: textarea
+    id: concern
+    attributes:
+      label: What is the concern?
+      description: Quote the passage and explain what is unclear, inconsistent or unsupported.
+    validations:
+      required: true
+  - type: textarea
+    id: suggestion
+    attributes:
+      label: Suggested resolution (optional)

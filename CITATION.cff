@@ -1,0 +1,21 @@
+cff-version: 1.2.0
+message: "If you use this software or protocol, please cite it as below."
+title: "ONTO-PROBE: probing the limits of ontological innovation in large language models"
+type: software
+authors:
+  - name: "matrixNeo76"
+abstract: >-
+  A research protocol and toolkit to test whether large language models can generate
+  conceptually novel structures or only recombine known archetypes. Includes theory,
+  a 50-task benchmark, a blind multi-judge evaluation pipeline over APIs, and a
+  Contrastive Activation Addition smoke test.
+version: "0.3.2"
+date-released: "2026-10-11"
+license: Apache-2.0
+repository-code: "https://github.com/matrixNeo76/ontoprobe"
+keywords:
+  - large language models
+  - ontological novelty
+  - activation steering
+  - benchmark
+  - evaluation
