@@ -1,98 +1,111 @@
 # ONTO-PROBE
 
-Research framework for probing the limits of ontological innovation in large language models.
+Un progetto di ricerca per rispondere a una domanda: **un modello linguistico (LLM) può inventare idee davvero nuove, oppure rimescola soltanto ciò che ha già visto in addestramento?**
 
-Status: v0.3.1 (documentation) / v0.3.2 (CAA smoke testbed) — pre-execution.
+Per "idee nuove" si intendono nuove relazioni causali, nuovi predicati e nuovi schemi esplicativi che non siano una semplice interpolazione o ricombinazione di modelli noti (gli *archetipi*).
 
-## Overview
+> **Stato: pre-esecuzione.** Documentazione e codice sono completi e testati offline, ma **nessun esperimento reale è stato ancora eseguito**: non ci sono risultati. Il repository oggi è un protocollo pronto da lanciare, non una conferma di alcuna ipotesi.
 
-ONTO-PROBE investigates whether large language models can generate genuinely novel conceptual structures — new causal relations, predicates, and explanatory frameworks not reducible by interpolation or by mere recombination of known archetypes.
+## L'idea in breve
 
-The framework adopts a falsificationist posture: if the geometric closure of the transformer architecture is insurmountable, the protocol empirically measures the maximum divergence reachable under constrained generation.
+Il progetto parte da un'ipotesi da mettere alla prova, non da una tesi da difendere. L'ipotesi è il *No New Basis Principle*: un modello addestrato su un vocabolario fisso non può generare dimensioni concettuali davvero ortogonali a quelle del suo corpus. Se è vera, l'esperimento lo mostrerà misurando fino a dove si spinge la divergenza prima che l'output diventi incoerente. Se è falsa, emergeranno soluzioni valide e lontane dagli archetipi. In entrambi i casi il risultato è informativo.
 
-## Repository structure
+Per misurarlo il progetto combina:
 
-```text
-onto-probe/
-├── README.md                       # project overview
-├── LICENSE                         # license terms
-├── docs/
-│   ├── THEORY-001.md              # research framework and epistemology
-│   ├── IMPL-001.md                # implementation guide
-│   ├── BENCH-001.md               # benchmark task catalog
-│   ├── EVAL-001.md                # experimental protocol
-│   ├── META-001.md                # suite analysis and readiness matrix
-│   ├── howto.md                   # execution guide (white-box CAA, GPU)
-│   └── howto-blackbox.md          # execution guide (black-box API, no GPU)
-├── code/
-│   ├── notebook_caa_smoke_test_v0_3_2.ipynb  # CAA smoke test per Colab (generato)
-│   ├── notebook_caa_smoke_test_v0_3_2.py     # sorgente del notebook (PyTorch)
-│   ├── inspect_smoke_test_outputs.py      # qualitative inspection CLI
-│   ├── run_blackbox.py                    # black-box experiment via API (no GPU)
-│   ├── blackbox/                          # conditions, judges, stats, audit
-│   └── tests/                             # offline tests
-├── tools/                         # generators (notebook, task list)
-├── outputs/
-│   └── .gitkeep                   # generated results directory
-├── archive/                       # legacy or review-only material
-└── .gitignore                     # optional local ignores
-```
+- **un benchmark di 50 problemi** (O-Novel): 20 con risposta verificabile da un programma (Z3, ProVerif) e 30 aperti, con divieti sulle soluzioni ovvie (i *tabù semantici*);
+- **tre condizioni a confronto**: un singolo agente, più agenti che condividono la memoria, e la pipeline ONTO-PROBE con agenti isolati e vincoli di generazione;
+- **una valutazione alla cieca**: giudici LLM eterogenei e, dove non concordano, referee umani, con identificatori mascherati (HMAC) e una catena di audit;
+- **un controllo statistico**: accordo tra giudici (ICC), intervalli di confidenza e verifica che l'effetto superi il rumore.
 
-## Documentation
+## Due modi di eseguirlo
 
-| Document | Role |
-|---|---|
-| THEORY-001 | Theoretical framework, the No New Basis Principle, and the ontological novelty metric |
-| IMPL-001 | Computational implementation and low-spec architecture |
-| BENCH-001 | Benchmark O-Novel task catalog |
-| EVAL-001 | Experimental protocol and evaluation runbook |
-| META-001 | Suite assessment, readiness matrix, and glossary |
-| howto.md | Operational guide for the first empirical smoke test |
+| | **Black-box via API** | **White-box CAA** |
+|---|---|---|
+| Cosa fa | Chiede soluzioni a modelli commerciali e le fa valutare alla cieca da altri modelli | Entra nelle attivazioni di Llama-3.1-8B e le sposta lungo assi ontologici (*Contrastive Activation Addition*) |
+| Hardware | Nessuno: basta Python e una chiave API | GPU NVIDIA con almeno 8 GB (es. Colab T4 gratuita) |
+| Costo | Pochi centesimi per il pilota (stima, da verificare sui prezzi reali) | Gratuito su Colab, circa 45 minuti |
+| Stato | Pipeline completa, testata offline; mai eseguita con un'API reale | Notebook pronto; mai eseguito |
+| Guida | [`docs/howto-blackbox.md`](docs/howto-blackbox.md) | [`docs/howto.md`](docs/howto.md) |
 
-## Code
+**Se non hai una GPU, parti dal black-box.** Il collaudo white-box è un controllo preliminare sulla tecnica di steering, non una condizione per il resto.
 
-### notebook_caa_smoke_test_v0_3_2.ipynb
+## Come iniziare
 
-Colab notebook (generated from `notebook_caa_smoke_test_v0_3_2.py` with `python tools/build_notebook.py`). Smoke test for the LowVramOntologicalSteerer class. It extracts three ontological steering vectors via Contrastive Activation Addition on meta-llama/Llama-3.1-8B-Instruct, applies them across a generation grid with multiple seeds, compares each axis against a norm-matched random-vector control and the baseline sampling noise, and produces quantitative diagnostics.
-
-[Open in Colab](https://colab.research.google.com/github/matrixNeo76/ontoprobe/blob/main/code/notebook_caa_smoke_test_v0_3_2.ipynb)
-
-### inspect_smoke_test_outputs.py
-
-Command-line tool for qualitative inspection of smoke-test outputs. Produces dose-response views by ontological axis and Markdown exports.
-
-### run_blackbox.py
-
-GPU-free experiment on the Binary B tasks (30 open-domain problems). Generates solutions under three conditions (single agent, shared-memory multi-agent, ONTO-PROBE isolated pipeline) via an OpenAI-compatible API, has three heterogeneous LLM judges score them blind, and reports condition contrasts with bootstrap confidence intervals and inter-judge ICC. See `docs/howto-blackbox.md`.
-
-## Quick start
+### Senza GPU (black-box)
 
 ```bash
-# 1a. No GPU: black-box via API (see docs/howto-blackbox.md)
-python code/run_blackbox.py all --run-id prova --limit 6 --mock   # offline dry run
+# 1. Prova a secco: offline, gratis, i numeri sono casuali ma verifica che tutto giri
+python code/run_blackbox.py all --run-id prova --limit 6 --mock
 
-# 1b. With a GPU: read the white-box CAA guide
-cat docs/howto.md
+# 2. Stima di chiamate e costo
+python code/run_blackbox.py estimate --limit 6
 
-# 2. Open the notebook in Colab (T4 GPU) and run all cells
-# Follow steps 1–8 of docs/howto.md
-
-# 3. Re-inspect downloaded results locally
-python code/inspect_smoke_test_outputs.py --input path/to/results_with_metrics.csv --alpha 1.5
+# 3. Pilota reale (serve una chiave API, vedi la guida)
+export ONTO_API_KEY="la-tua-chiave"
+python code/run_blackbox.py all --run-id pilot --limit 6
 ```
 
-## Scope
+Il risultato è `outputs/blackbox/pilot/report.md`. Requisiti: Python 3.9+, nessuna libreria da installare.
 
-This repository does not claim that LLMs can or cannot achieve genuine ontological innovation. It provides:
+### Con una GPU (white-box)
 
-- a theoretical framework for operationalizing the question
-- a reproducible benchmark for empirical testing
-- a low-cost testbed for execution in consumer GPU environments
-- a rigorous evaluation protocol with blinding and inter-rater reliability metrics
+Apri il notebook in Colab e scegli "Runtime → Run all":
+[![Apri in Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/matrixNeo76/ontoprobe/blob/main/code/notebook_caa_smoke_test_v0_3_2.ipynb)
 
-## License
+Servono un account HuggingFace con accesso a Llama-3.1-8B-Instruct e il token salvato nei Secrets di Colab (`HF_TOKEN`). Tutti i passi sono in [`docs/howto.md`](docs/howto.md).
 
-- Documentation (`docs/`): CC BY 4.0
-- Code (`code/`): Apache 2.0
+### Test
 
-See `LICENSE` for details.
+```bash
+python -m unittest discover -s code/tests
+```
+
+22 test, tutti offline.
+
+## Cosa contiene
+
+```text
+├── docs/            documentazione del progetto (vedi tabella sotto)
+├── code/
+│   ├── run_blackbox.py                     avvio dell'esperimento black-box
+│   ├── blackbox/                           condizioni, giudici, statistiche, audit
+│   ├── notebook_caa_smoke_test_v0_3_2.ipynb  collaudo CAA per Colab (generato)
+│   ├── notebook_caa_smoke_test_v0_3_2.py   sorgente del notebook
+│   ├── inspect_smoke_test_outputs.py       ispezione qualitativa dei risultati CAA
+│   └── tests/                              test offline
+├── tools/           generatori: notebook .ipynb e lista dei task
+├── outputs/         risultati generati (ignorata da git)
+└── archive/         materiale storico e note di revisione
+```
+
+| Documento | A cosa serve |
+|---|---|
+| [`THEORY-001`](docs/THEORY-001.md) | Quadro teorico, definizione di novità ontologica, metodologia, rischi |
+| [`IMPL-001`](docs/IMPL-001.md) | Architettura tecnica e codice di riferimento |
+| [`BENCH-001`](docs/BENCH-001.md) | Catalogo dei 50 task e specifiche del benchmark |
+| [`EVAL-001`](docs/EVAL-001.md) | Protocollo sperimentale, rubriche dei giudici, scheda del referee umano, statistica |
+| [`META-001`](docs/META-001.md) | Valutazione della suite, glossario, roadmap |
+| [`howto-blackbox.md`](docs/howto-blackbox.md) | Guida passo-passo al percorso via API |
+| [`howto.md`](docs/howto.md) | Guida passo-passo al collaudo CAA su Colab |
+
+I documenti teorici sono in italiano e seguono il formato OKF v0.2.
+
+## Limiti da conoscere
+
+- **Misura la novità percepita da giudici LLM**, non una novità ontologica dimostrata. Un risultato positivo va confermato con referee umani.
+- **Il black-box non fa steering interno**: il seed sintattico è un surrogato di ciò che la CAA farebbe sulle attivazioni.
+- **Manca la distanza dagli archetipi**: il database da 2.000 voci non è stato costruito e la soglia τ è provvisoria.
+- **I 20 task formali (Binario A)** non sono ancora inclusi nel percorso black-box.
+- **Pochi task, intervalli larghi**: il pilota da 6 task verifica la pipeline e stima il rumore; non basta per concludere.
+- **Premesse da verificare**: i dati empirici di partenza (Matarmaa 2026) non sono stati controllati sulla fonte.
+
+## Cosa questo repository non afferma
+
+Non sostiene che gli LLM possano o non possano raggiungere un'innovazione ontologica autentica. Fornisce un modo per porre la domanda in forma verificabile.
+
+## Licenza
+
+- Documentazione (`docs/`): CC BY 4.0
+- Codice (`code/`): Apache 2.0
+
+Il file `LICENSE` con il testo completo non è ancora presente nel repository.
