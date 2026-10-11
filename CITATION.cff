@@ -3,7 +3,9 @@ message: "If you use this software or protocol, please cite it as below."
 title: "ONTO-PROBE: probing the limits of ontological innovation in large language models"
 type: software
 authors:
-  - name: "matrixNeo76"
+  - family-names: "Iavarone"
+    given-names: "Francesco"
+    alias: "matrixNeo76"
 abstract: >-
   A research protocol and toolkit to test whether large language models can generate
   conceptually novel structures or only recombine known archetypes. Includes theory,
