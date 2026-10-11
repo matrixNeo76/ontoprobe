@@ -17,6 +17,10 @@ This document tracks the correspondence between old filenames (from main branch)
 | `notebook/revisione_tecnica_e_patch_del_notebook_caa_smoke_test.md` | `archive/IMPLEMENTATION-NOTES.md` | Historical review |
 | `dossier_di_validazione_finale_e_audit_operativo.md` | `archive/VALIDATION-AUDIT.md` | Historical review |
 
+## Archived originals
+
+The original long-named root files are preserved unchanged in this directory (`archive/<legacy file name>`). The `docs/` versions are the condensed canonical ones.
+
 ## Rationale
 
 - **Canonical names**: Short, uniform prefixes (THEORY, IMPL, BENCH, EVAL, META) following OKF v0.2 standard
