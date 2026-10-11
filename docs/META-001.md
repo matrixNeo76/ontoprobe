@@ -74,7 +74,7 @@ I 5 documenti formano una rete concettuale e operativa conforme allo standard **
 | **Sviluppo Software Locale** | `THEORY-001` + `IMPL-001` | **100% Pronto** | Stack Docker attivo, codice PyTorch e orchestratore con ruoli API corretti. |
 | **Sottomissione Paper / Pre-print** | `THEORY-001` + `IMPL-001` + `META-001` | **100% Pronto** | Apparato teorico rigoroso con limitazioni dell'embedder documentate. |
 | **Campagna Sperimentale Pilota** | `BENCH-001` + `EVAL-001` | **100% Pronto** | Sottogruppo di task pilota con blinding HMAC attivo. |
-| **Campagna Sperimentale Completa** | Tutti i 5 documenti | **95% Pronto** | Tutti i 50 task catalogati (25 con scheda analitica estesa, 25 con specifica sintetica che sarà espansa nella release v0.1.1 del benchmark). |
+| **Campagna Sperimentale Completa** | Tutti i 5 documenti | **95% Pronto** | Tutti i 50 task catalogati; solo 2 (B21, B35) hanno scheda analitica estesa, gli altri 48 una specifica sintetica che sarà espansa nella release v0.1.1 del benchmark. |
 | **Candidatura Grant Internazionale** | Suite Completa | **100% Pronto** | Raccordo costi trasparente (€500k istituzionale vs €1.200 standalone). |
 
 ---

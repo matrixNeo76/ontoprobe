@@ -99,9 +99,11 @@ Colab tratterà i marcatori `# %%` come semplici commenti. Il codice funzionerà
 
 Se preferisci la struttura a celle (più comoda per il debug):
 
-1. Sul tuo computer, salva il contenuto del file `.py` come `caa_smoke_test.ipynb` (cambia solo l'estensione)
-2. In Colab: **"File" → "Upload notebook"**
-3. Seleziona il file appena salvato
+1. Dividi il contenuto del file `.py` in corrispondenza di ogni riga `# %%`
+2. In Colab crea una cella di codice per ogni blocco (**"+ Codice"**) e incolla un blocco per cella
+3. Esegui le celle in ordine, dall'alto verso il basso
+
+(Rinominare il file `.py` in `.ipynb` non funziona: Colab si aspetta un formato JSON e rifiuterebbe il file.)
 
 **Se non sei sicuro, usa il metodo consigliato.** Funziona sempre.
 
@@ -174,7 +176,8 @@ L'output apparirà nella cella: vedrai il baseline, poi i tre assi ontologici a 
 # Confronto a un α diverso
 !python inspect_smoke_test_outputs.py --alpha 2.0
 
-# Salva il dossier Markdown senza stampare a terminale
+# Salva il dossier Markdown in un percorso a scelta
+# (il dossier viene sempre esportato; di default in ./caa_smoke_test_output/qualitative_dossier.md)
 !python inspect_smoke_test_outputs.py --alpha 1.5 --export-md ./dossier.md
 ```
 

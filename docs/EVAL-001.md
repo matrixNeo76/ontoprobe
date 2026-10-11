@@ -218,6 +218,16 @@ def compute_inter_rater_icc(df_ratings: pd.DataFrame) -> dict:
     if not (crosstab == 1).all().all():
         logging.warning("Design non perfettamente bilanciato tra tutti i rater. "
                         "ICC(2,k) calcolato sui campioni con intersezione completa.")
+        complete_ids = crosstab.index[(crosstab == 1).all(axis=1)]
+        cleaned = cleaned[cleaned['sample_id'].isin(complete_ids)]
+        if cleaned.empty:
+            return {
+                "icc_value": 0.0,
+                "ci95": [0.0, 0.0],
+                "p_value": 1.0,
+                "is_reliable": False,
+                "note": "No sample rated by all raters"
+            }
 
     try:
         icc_table = pg.intraclass_corr(

@@ -3,7 +3,7 @@
 inspect_smoke_test_outputs.py — Strumento di Ispezione Qualitativa per CAA Smoke Test
 Progetto: ONTO-PROBE (v0.3.2)
 
-Carica i risultati prodotti da `caa_smoke_test.py`, genera viste comparative
+Carica i risultati prodotti da `notebook_caa_smoke_test_v0_3_2.py`, genera viste comparative
 fianco a fianco, evidenzia i delta lessicali per asse ontologico e redige un dossier
 analitico leggibile in formato Markdown o visualizzabile direttamente a terminale.
 """

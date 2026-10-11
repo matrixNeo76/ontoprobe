@@ -31,7 +31,11 @@ def install_deps():
     subprocess.check_call([sys.executable, "-m", "pip", "install", "-q", "--upgrade"] + pkgs)
 
 try:
+    import accelerate
+    import bitsandbytes
+    import nltk
     import pyarrow
+    import sentence_transformers
     import tabulate
 except ImportError:
     install_deps()
